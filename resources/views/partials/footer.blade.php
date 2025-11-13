@@ -41,6 +41,6 @@
 
     <div class="mt-8 border-t border-blue-800 pt-6 text-center text-sm text-gray-400">
       <p>© 2025 Municipalidad Distrital de Choco. Todos los derechos reservados.</p>
-    </div>
+    </div>S
   </div>
 </footer>
