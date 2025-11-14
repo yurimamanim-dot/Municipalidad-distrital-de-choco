@@ -11,6 +11,10 @@ Route::view('/', 'home')->name('home');
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])
      ->name('mesa.enviar');
+// Página "La Municipalidad"
+Route::get('/la-municipalidad', function () {
+    return view('la-municipalidad');
+})->name('la-municipalidad');
 
      
 Route::get('/mesa-de-partes/confirmacion', function () {

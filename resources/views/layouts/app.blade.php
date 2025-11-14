@@ -12,22 +12,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 
   <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            primary: "#003366",
-            secondary: "#00AEEF",
-            "light-gray": "#F4F4F4",
-            "background-light": "#FFFFFF",
-            "background-dark": "#101622",
-          },
-          fontFamily: { display: ["Poppins", "sans-serif"] },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary: "#003366",       // Azul institucional
+          secondary: "#00AEEF",     // Azul secundario
+          accent: "#43A047",        // Verde acento
+          "accent-hover": "#66BB6A",// Verde acento hover
+          "light-gray": "#F4F4F4",
+          "background-light": "#FFFFFF",
+          "background-dark": "#101622",
         },
+        fontFamily: { display: ["Poppins", "sans-serif"] },
       },
-    }
-  </script>
+    },
+  }
+</script>
+
   <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 27; font-size: 50px;
