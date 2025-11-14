@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.municipal')
 
 @section('title','Municipalidad - La Municipalidad')
 

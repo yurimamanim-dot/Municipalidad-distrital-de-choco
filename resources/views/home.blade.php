@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.municipal')
 @section('title','Municipalidad - Inicio')
 
 @section('content')
@@ -6,9 +6,7 @@
   {{-- HERO --}}
   <section class="relative w-full">
     <picture>
-      <!-- Imagen vertical para móvil -->
       <source media="(max-width: 640px)" srcset="/img/hero-choco-1600x1800.jpg" />
-      <!-- Imagen horizontal para pantallas ≥640px -->
       <img
         src="/img/hero-choco.jpg"
         alt="Municipalidad de Choco"
@@ -17,9 +15,8 @@
       />
     </picture>
 
-    <!-- Contenido encima (opcional) -->
     <div class="absolute inset-0 flex items-center justify-center px-4 text-center">
-      <!-- títulos/botón -->
+      {{-- títulos/botón opcionales --}}
     </div>
   </section>
 
@@ -130,6 +127,5 @@
       </div>
     </div>
   </section>
-
 
 @endsection

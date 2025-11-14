@@ -60,20 +60,38 @@
         La Municipalidad
       </a>
 
-      {{-- Otros enlaces aún sin ruta (puedes ir cambiando # por route(...) cuando los tengas) --}}
       <a class="text-sm font-medium text-gray-600 hover:text-secondary" href="#">Servicios</a>
       <a class="text-sm font-medium text-gray-600 hover:text-secondary" href="#">Trámites</a>
       <a class="text-sm font-medium text-gray-600 hover:text-secondary" href="#">Transparencia</a>
+
+      {{-- 🔐 Portal (Breeze) --}}
+      @auth
+        {{-- Usuario logueado → al dashboard / panel --}}
+        <a href="{{ route('dashboard') }}"
+           class="text-sm font-medium
+             {{ request()->routeIs('dashboard') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
+          Portal
+        </a>
+      @else
+        {{-- Invitado → al login de Breeze --}}
+        <a href="{{ route('login') }}"
+           class="text-sm font-medium
+             {{ request()->routeIs('login') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
+          Portal
+        </a>
+      @endauth
     </nav>
 
     <div class="flex items-center gap-4">
       <button class="hidden md:flex items-center justify-center rounded-full p-2 text-gray-500 hover:bg-gray-100">
         <span class="material-symbols-outlined">search</span>
       </button>
+
       <a href="{{ route('mesa') }}"
          class="flex min-w-[84px] items-center justify-center rounded-full h-10 px-6 bg-secondary text-white text-sm font-bold tracking-wide transition-transform hover:scale-105">
         <span class="truncate">Mesa de Partes</span>
       </a>
+
       <button class="p-2 text-primary lg:hidden">
         <span class="material-symbols-outlined text-3xl">menu</span>
       </button>

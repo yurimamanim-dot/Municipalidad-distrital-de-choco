@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.municipal')
 @section('title','Confirmación de Envío')
 
 @section('content')
@@ -11,12 +11,12 @@
 
       <h2 class="font-display text-4xl font-bold text-primary mt-4">¡Envío realizado con éxito!</h2>
 
-      <p class="mt-4 max-w-lg text-lg text-gray-700 dark:text-gray-300">
+      <p class="mt-4 max-w-lg text-lg text-gray-700">
         Tu documento fue recibido y será procesado por la Municipalidad de Choco.
       </p>
 
-      <div class="mt-6 w-full max-w-md rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 p-5 text-left">
-        <p class="text-sm text-gray-500 dark:text-gray-400">N° de expediente</p>
+      <div class="mt-6 w-full max-w-md rounded-xl border border-gray-200 bg-white p-5 text-left">
+        <p class="text-sm text-gray-500">N° de expediente</p>
         <p class="text-2xl font-extrabold text-primary">{{ $expediente }}</p>
 
         @if(!empty($nombre) || !empty($correo))
@@ -30,7 +30,7 @@
           </div>
         @endif
 
-        <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-4 text-sm text-gray-600">
           Te enviaremos un correo de confirmación. Conserva este número para futuras consultas internas.
         </p>
       </div>
@@ -41,12 +41,12 @@
           Volver al Inicio
         </a>
         <a href="{{ route('mesa') }}"
-           class="flex min-w-[220px] items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-gray-800 border border-primary text-primary text-sm font-bold uppercase tracking-wider hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+           class="flex min-w-[220px] items-center justify-center rounded-lg h-12 px-6 bg-white border border-primary text-primary text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition">
           Enviar otro documento
         </a>
       </div>
 
-      <p class="mt-6 text-xs text-gray-500 dark:text-gray-400">
+      <p class="mt-6 text-xs text-gray-500">
         ¿Necesitas ayuda? Escríbenos a <span class="font-semibold">informes@municipalidad.gob.pe</span> o llama al <span class="font-semibold">(01) 123-4567</span>.
       </p>
     </div>

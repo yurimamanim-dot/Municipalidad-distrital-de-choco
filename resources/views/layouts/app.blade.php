@@ -1,60 +1,47 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>@yield('title','Municipalidad - Página de Inicio')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <script>
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          primary: "#003366",       // Azul institucional
-          secondary: "#00AEEF",     // Azul secundario
-          accent: "#43A047",        // Verde acento
-          "accent-hover": "#66BB6A",// Verde acento hover
-          "light-gray": "#F4F4F4",
-          "background-light": "#FFFFFF",
-          "background-dark": "#101622",
-        },
-        fontFamily: { display: ["Poppins", "sans-serif"] },
-      },
-    },
-  }
-</script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 27; font-size: 50px;
-    }
-    .hero-bg {
-      background-image: url("/img/hero-choco.jpg");
-    }
-  </style>
-    <style>
-    .hero-bg { background-image: url("/img/hero-choco.jpg"); }
-    @media (max-width: 640px) {
-    .hero-bg { background-image: url("/img/hero-choco-1600x1800.jpg"); }
-    }
-    </style>
-  @stack('head')
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark text-[#111318] dark:text-white">
-  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-    <div class="layout-container flex h-full grow flex-col">
-      @include('partials.header')
-      <main class="flex-1">@yield('content')</main>
-      @include('partials.footer')
+
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100">
+        @include('layouts.navigation')
+
+        <!-- Page Heading -->
+        @isset($header)
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
+
+        <!-- Page Content -->
+        <!-- Page Content -->
+        <main>
+            @isset($slot)
+                {{-- Cuando se usa como componente: <x-app-layout> --}}
+                    {{ $slot }}
+            @else
+                    {{-- Cuando se usa como layout clásico: @extends('layouts.app') --}}
+                    @yield('content')
+                @endisset
+        </main>
+
     </div>
-  </div>
-  @stack('scripts')
 </body>
+
 </html>

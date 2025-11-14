@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.municipal')
 
 @section('title','Administrar Noticias')
 
 @section('content')
 <div class="py-10">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-background-dark shadow-xl sm:rounded-lg p-6">
+    <div class="bg-white shadow-xl sm:rounded-lg p-6">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Noticias</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Noticias</h1>
         <a href="{{ route('admin.noticias.create') }}"
            class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90">
           <span class="material-symbols-outlined text-base">add</span>
@@ -21,9 +21,9 @@
         </div>
       @endif
 
-      <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-        <table class="min-w-full text-sm text-gray-700 dark:text-gray-200">
-          <thead class="bg-gray-100 dark:bg-gray-800">
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="min-w-full text-sm text-gray-700">
+          <thead class="bg-gray-100">
             <tr>
               <th class="px-4 py-2 text-left">Título</th>
               <th class="px-4 py-2 text-left">Categoría</th>
@@ -34,7 +34,7 @@
           </thead>
           <tbody>
             @forelse($noticias as $noticia)
-              <tr class="border-t border-gray-200 dark:border-gray-700">
+              <tr class="border-t border-gray-200">
                 <td class="px-4 py-2">
                   <div class="font-semibold">{{ $noticia->titulo }}</div>
                   <div class="text-xs text-gray-500">{{ $noticia->slug }}</div>

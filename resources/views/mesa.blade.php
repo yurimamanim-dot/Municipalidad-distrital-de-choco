@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.municipal')
 @section('title', 'Mesa de Partes Virtual')
 
 @section('content')
@@ -7,17 +7,17 @@
             <div class="mb-12 text-center">
                 <p class="text-accent text-sm font-bold uppercase tracking-wider">Trámites en línea</p>
                 <h2
-                    class="text-primary dark:text-white text-4xl md:text-5xl font-extrabold tracking-wide mt-2 font-display">
+                    class="text-primary text-4xl md:text-5xl font-extrabold tracking-wide mt-2 font-display">
                     Mesa de Partes Virtual
                 </h2>
-                <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg mt-4 max-w-2xl mx-auto">
+                <p class="text-gray-600 text-base md:text-lg mt-4 max-w-2xl mx-auto">
                     Presente sus documentos de manera rápida y segura a través de nuestro portal digital, disponible las 24
                     horas del día.
                 </p>
             </div>
 
             <div
-                class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 p-6 md:p-10 shadow-lg">
+                class="rounded-xl border border-gray-200 bg-white p-6 md:p-10 shadow-lg">
 
                 {{-- Mensajes arriba del <form> ya están OK --}}
 
@@ -25,10 +25,10 @@
                         @csrf
 
                         {{-- DATOS DEL REMITENTE --}}
-                        <div class="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-lg border-l-4 border-accent">
-                            <h3 class="text-lg font-bold text-primary dark:text-secondary mb-1 uppercase">Datos del
+                        <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-accent">
+                            <h3 class="text-lg font-bold text-primary mb-1 uppercase">Datos del
                                 Remitente</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Información de la persona o entidad que
+                            <p class="text-sm text-gray-500 mb-6">Información de la persona o entidad que
                                 presenta el documento.</p>
 
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
@@ -36,7 +36,7 @@
                                     <span class="text-sm font-medium pb-2">Nombre Completo <span
                                             class="text-red-600">*</span></span>
                                     <input id="nombre" name="nombre" type="text" required
-                                        class="form-input rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-input rounded-lg h-12 px-4 border-gray-300"
                                         placeholder="Ingrese su nombre completo" value="{{ old('nombre') }}">
                                     @error('nombre')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -45,7 +45,7 @@
                                     <span class="text-sm font-medium pb-2">DNI / RUC <span
                                             class="text-red-600">*</span></span>
                                     <input id="documento" name="documento" type="text" required
-                                        class="form-input rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-input rounded-lg h-12 px-4 border-gray-300"
                                         placeholder="Ingrese su número de documento" value="{{ old('documento') }}">
                                     @error('documento')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -54,7 +54,7 @@
                                     <span class="text-sm font-medium pb-2">Correo Electrónico <span
                                             class="text-red-600">*</span></span>
                                     <input id="correo" name="correo" type="email" required
-                                        class="form-input rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-input rounded-lg h-12 px-4 border-gray-300"
                                         placeholder="ejemplo@correo.com" value="{{ old('correo') }}">
                                     @error('correo')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -62,7 +62,7 @@
                                 <label for="telefono" class="flex flex-col">
                                     <span class="text-sm font-medium pb-2">Teléfono</span>
                                     <input id="telefono" name="telefono" type="tel"
-                                        class="form-input rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-input rounded-lg h-12 px-4 border-gray-300"
                                         placeholder="Ingrese su número de teléfono" value="{{ old('telefono') }}">
                                     @error('telefono')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -71,9 +71,9 @@
 
                         {{-- DATOS DEL DOCUMENTO --}}
                         <div>
-                            <h3 class="text-lg font-bold text-primary dark:text-secondary mb-1 uppercase">Datos del
+                            <h3 class="text-lg font-bold text-primary mb-1 uppercase">Datos del
                                 Documento</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Detalles sobre el documento que está
+                            <p class="text-sm text-gray-500 mb-6">Detalles sobre el documento que está
                                 presentando.</p>
 
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
@@ -81,7 +81,7 @@
                                     <span class="text-sm font-medium pb-2">Tipo de Documento <span
                                             class="text-red-600">*</span></span>
                                     <select id="tipo" name="tipo" required
-                                        class="form-select rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800">
+                                        class="form-select rounded-lg h-12 px-4 border-gray-300">
                                         <option value="" disabled {{ old('tipo') ? '' : 'selected' }}>Seleccione una opción
                                         </option>
                                         <option value="solicitud" {{ old('tipo') == 'solicitud' ? 'selected' : '' }}>Solicitud
@@ -97,7 +97,7 @@
                                 <label for="asunto" class="flex flex-col sm:col-span-2">
                                     <span class="text-sm font-medium pb-2">Asunto <span class="text-red-600">*</span></span>
                                     <input id="asunto" name="asunto" type="text" required
-                                        class="form-input rounded-lg h-12 px-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-input rounded-lg h-12 px-4 border-gray-300"
                                         placeholder="Ej: Solicitud de licencia de construcción" value="{{ old('asunto') }}">
                                     @error('asunto')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -105,7 +105,7 @@
                                 <label for="descripcion" class="flex flex-col sm:col-span-2">
                                     <span class="text-sm font-medium pb-2">Descripción / Mensaje</span>
                                     <textarea id="descripcion" name="descripcion"
-                                        class="form-textarea min-h-[120px] rounded-lg p-4 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                                        class="form-textarea min-h-[120px] rounded-lg p-4 border-gray-300"
                                         placeholder="Describa brevemente el contenido o motivo de su documento.">{{ old('descripcion') }}</textarea>
                                     @error('descripcion')<small class="text-red-600">{{ $message }}</small>@enderror
                                 </label>
@@ -113,17 +113,17 @@
                         </div>
 
                         {{-- ADJUNTOS --}}
-                        <div class="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-lg border-l-4 border-accent">
-                            <h3 class="text-lg font-bold text-primary dark:text-secondary mb-1 uppercase">Adjuntar Archivos
+                        <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-accent">
+                            <h3 class="text-lg font-bold text-primary mb-1 uppercase">Adjuntar Archivos
                             </h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Puede adjuntar el documento principal y
+                            <p class="text-sm text-gray-500 mb-6">Puede adjuntar el documento principal y
                                 anexos si es necesario.</p>
 
                             <div
-                                class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 dark:border-gray-600 px-6 py-10 hover:border-accent">
+                                class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-10 hover:border-accent">
                                 <div class="text-center">
                                     <span class="material-symbols-outlined text-5xl text-gray-400">upload_file</span>
-                                    <div class="mt-4 flex text-sm text-gray-600 dark:text-gray-400">
+                                    <div class="mt-4 flex text-sm text-gray-600">
                                         <label for="file-upload"
                                             class="relative cursor-pointer rounded-md font-semibold text-secondary hover:underline">
                                             <span>Subir un archivo</span>
@@ -152,7 +152,7 @@
 
                             <div class="flex w-full flex-col sm:flex-row sm:items-center sm:justify-end gap-3 mt-4">
                                 <button type="reset"
-                                    class="rounded-lg h-12 px-6 bg-gray-200 dark:bg-gray-700 text-sm font-bold">Limpiar
+                                    class="rounded-lg h-12 px-6 bg-gray-200 text-sm font-bold">Limpiar
                                     Formulario</button>
                                 <button type="submit"
                                     class="rounded-lg h-12 px-6 bg-primary text-white text-sm font-bold gap-2 flex items-center">
