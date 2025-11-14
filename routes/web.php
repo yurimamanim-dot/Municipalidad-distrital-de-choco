@@ -7,7 +7,7 @@ Route::view('/', 'home')->name('home');
 use App\Http\Controllers\MesaDePartesController;
 
 Route::view('/', 'home')->name('home');
-
+// Mesa De Partes
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])
      ->name('mesa.enviar');
