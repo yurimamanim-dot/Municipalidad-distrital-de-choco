@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilo base del body para el portal */
+body {
+    @apply font-body bg-background-light text-text-dark;
+}
