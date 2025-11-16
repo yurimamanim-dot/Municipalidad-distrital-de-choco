@@ -1,128 +1,190 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="w-full max-w-md px-4">
+    <div class="min-h-screen w-full flex flex-col items-center justify-center px-4"
+         style="background-color:#f4f4f4; font-family:'Open Sans',sans-serif;">
 
-            {{-- Logo redondo --}}
-            <div class="flex justify-center mb-6">
-                <div class="flex items-center justify-center w-20 h-20 rounded-full"
+        <main class="w-full max-w-md">
+            {{-- Logo + título --}}
+            <div class="mb-8 flex flex-col items-center text-center">
+                <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full"
                      style="background-color:#1976D2;">
-                    <span class="material-symbols-outlined text-white text-4xl">
+                    <span class="material-symbols-outlined text-5xl text-white">
                         account_balance
                     </span>
                 </div>
-            </div>
-
-            {{-- Títulos --}}
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-extrabold text-gray-900 leading-tight"
+                <h1 class="text-3xl font-black text-[#131613] leading-tight"
                     style='font-family:"Poppins",sans-serif;'>
-                    Portal de<br>Administración
+                    Portal de Administración
                 </h1>
-                <p class="mt-3 text-sm text-gray-500">
+                <p class="mt-2 text-base text-[#6c7f6d]">
                     Inicie sesión para acceder al panel
                 </p>
             </div>
 
-            {{-- Mensajes de sesión (opcional) --}}
+            {{-- Mensaje de estado --}}
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             {{-- Tarjeta de login --}}
-            <div class="bg-white rounded-2xl shadow-md p-8 space-y-6">
-
-                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            <div class="flex flex-col gap-6 rounded-2xl bg-white p-8 shadow-sm">
+                <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-5">
                     @csrf
 
-                    {{-- Email / Usuario --}}
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">
+                    {{-- Email / usuario --}}
+                    <div class="flex flex-col">
+                        <label for="email"
+                               class="mb-1.5 text-sm font-medium text-[#131613]">
                             Nombre de Usuario o Correo Electrónico
                         </label>
 
-                        <div class="relative">
-                            <span
-                                class="material-symbols-outlined absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+                        <div class="relative mt-1 login-input-wrapper">
+                            {{-- Icono izquierda --}}
+                            <span class="material-symbols-outlined login-icon-left">
                                 person
                             </span>
+
                             <input
                                 id="email"
-                                type="email"
                                 name="email"
+                                type="email"
                                 value="{{ old('email') }}"
                                 required
                                 autofocus
                                 autocomplete="username"
                                 placeholder="Ingrese su usuario o correo"
-                                class="block w-full rounded-lg border border-gray-300 bg-white
-                                       py-3 pl-11 pr-3 text-sm text-gray-900 placeholder-gray-400
-                                       focus:border-blue-600 focus:ring-2 focus:ring-blue-600"
-                            >
+                                class="login-input"
+                            />
                         </div>
 
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
-                    {{-- Password --}}
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">
+                    {{-- Contraseña --}}
+                    <div class="flex flex-col">
+                        <label for="password"
+                               class="mb-1.5 text-sm font-medium text-[#131613]">
                             Contraseña
                         </label>
 
-                        <div class="relative">
-                            <span
-                                class="material-symbols-outlined absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xl">
+                        <div class="relative mt-1 login-input-wrapper">
+                            {{-- Icono izquierda --}}
+                            <span class="material-symbols-outlined login-icon-left">
                                 lock
                             </span>
+
                             <input
                                 id="password"
-                                type="password"
                                 name="password"
+                                type="password"
                                 required
                                 autocomplete="current-password"
                                 placeholder="Ingrese su contraseña"
-                                class="block w-full rounded-lg border border-gray-300 bg-white
-                                       py-3 pl-11 pr-3 text-sm text-gray-900 placeholder-gray-400
-                                       focus:border-blue-600 focus:ring-2 focus:ring-blue-600"
-                            >
+                                class="login-input"
+                            />
+
+                            {{-- Ojito --}}
+                            <button
+                                type="button"
+                                aria-label="Mostrar u ocultar contraseña"
+                                class="login-icon-right">
+                                <span class="material-symbols-outlined">
+                                    visibility
+                                </span>
+                            </button>
                         </div>
 
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     {{-- Recordarme + Olvidó contraseña --}}
-                    <div class="flex items-center justify-between gap-4">
-                        <label for="remember_me" class="inline-flex items-center">
-                            <input id="remember_me" type="checkbox"
-                                   class="rounded border-gray-300 text-blue-600 shadow-sm
-                                          focus:border-blue-600 focus:ring-blue-600"
-                                   name="remember">
-                            <span class="ml-2 text-sm text-gray-600">Recordarme</span>
+                    <div class="flex items-center justify-between text-sm mt-1">
+                        <label for="remember_me" class="inline-flex items-center gap-2">
+                            <input id="remember_me" type="checkbox" name="remember"
+                                   class="rounded border-gray-300 text-[#1976D2] shadow-sm
+                                          focus:border-[#1976D2] focus:ring-[#1976D2]">
+                            <span class="text-gray-600">Recordarme</span>
                         </label>
 
                         @if (Route::has('password.request'))
-                            <a class="text-sm text-blue-700 hover:text-blue-900 font-medium underline whitespace-nowrap"
-                               href="{{ route('password.request') }}">
+                            <a href="{{ route('password.request') }}"
+                               class="text-[#1976D2] hover:text-[#12519A] underline">
                                 ¿Olvidó su contraseña?
                             </a>
                         @endif
                     </div>
 
                     {{-- Botón --}}
-                    <div class="pt-1">
-                        <button type="submit"
-                                class="inline-flex w-full justify-center rounded-full border border-transparent
-                                       px-4 py-3 text-sm font-semibold text-white
-                                       focus:outline-none focus:ring-2 focus:ring-offset-2"
-                                style="background-color:#43A047; --tw-ring-color:#43A047;">
-                            Iniciar Sesión
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        class="mt-3 flex h-14 w-full items-center justify-center rounded-lg
+                               px-6 text-base font-bold leading-normal text-white
+                               transition-colors duration-200"
+                        style="background-color:#43A047;">
+                        Iniciar Sesión
+                    </button>
                 </form>
             </div>
 
             {{-- Footer --}}
-            <p class="mt-6 text-center text-xs text-gray-500">
+            <p class="mt-8 text-center text-xs text-gray-500">
                 © {{ now()->year }} Gobierno Municipal. Todos los derechos reservados.
             </p>
-        </div>
+        </main>
     </div>
+
+    {{-- Estilos específicos para alinear iconos y texto --}}
+    <style>
+        .login-input-wrapper {
+            position: relative;
+        }
+
+        .login-input {
+            width: 100%;
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #dee3de;
+            background-color: #ffffff;
+            padding: 0.75rem 3rem;  /* arriba/abajo, derecha/izquierda base */
+            padding-left: 3rem;    /* más espacio para el icono izquierdo */
+            padding-right: 3rem;   /* más espacio para el ojo */
+            font-size: 0.875rem;
+            color: #131613;
+        }
+
+        .login-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #1976D2;
+            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.25);
+        }
+
+        .login-icon-left {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .login-icon-right {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c7f6d;
+            cursor: pointer;
+        }
+
+        .login-icon-right .material-symbols-outlined {
+            font-size: 1.25rem;
+        }
+    </style>
 </x-guest-layout>

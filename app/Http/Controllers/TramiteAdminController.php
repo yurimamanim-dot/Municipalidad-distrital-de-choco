@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Tramite;
-use Illuminate\Http\Request;
-
-use App\Models\Tramite;
-use Illuminate\Http\Request;
 
 class TramiteAdminController extends Controller
 {
