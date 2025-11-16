@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MesaDePartesController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\TramiteAdminController;
+use App\Http\Controllers\ProfileController;
+
 
 // Página principal pública
 Route::view('/', 'home')->name('home');
@@ -58,6 +60,11 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/noticias/{noticia}', [NoticiaController::class, 'update'])->name('noticias.update');
         Route::delete('/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
     });
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Rutas de autenticación creadas por Breeze (login, register, etc.)
