@@ -13,7 +13,7 @@
       <div>
         <h3 class="mb-4 text-lg font-bold">Enlaces Rápidos</h3>
         <ul class="space-y-2 text-sm text-gray-300">
-          <li><a class="hover:text-secondary" href="#">La Municipalidad</a></li>
+          <li><a class="hover:text-secondary" href="{{ route('la-municipalidad') }}">La Municipalidad</a></li>
           <li><a class="hover:text-secondary" href="#">Servicios en Línea</a></li>
           <li><a class="hover:text-secondary" href="#">Portal de Transparencia</a></li>
           <li><a class="hover:text-secondary" href="#">Noticias y Eventos</a></li>
