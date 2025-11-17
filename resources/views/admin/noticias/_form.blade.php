@@ -1,5 +1,3 @@
-@csrf
-
 <div class="grid gap-4 md:grid-cols-2">
 
   {{-- TÍTULO --}}
@@ -61,7 +59,38 @@
     @enderror
   </div>
 
-  {{-- CONTENIDO (HTML) – textarea que el editor va a transformar --}}
+  {{-- ESTADO (BORRADOR / PUBLICADO) --}}
+  @php
+      $estadoActual = old('publicado', $noticia->publicado ?? 0);
+  @endphp
+  <div class="md:col-span-2 flex items-center justify-between">
+    <div>
+      <span class="block text-sm font-medium text-gray-700 mb-1">Estado</span>
+      <p class="text-xs text-gray-500">
+        Puedes guardar como borrador o marcarla como publicada en el portal.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <select name="publicado"
+              class="rounded-lg border-gray-300 bg-white text-sm focus:border-primary focus:ring-primary">
+        <option value="0" {{ $estadoActual ? '' : 'selected' }}>Borrador</option>
+        <option value="1" {{ $estadoActual ? 'selected' : '' }}>Publicado</option>
+      </select>
+
+      @if($estadoActual)
+        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
+          Publicado
+        </span>
+      @else
+        <span class="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-semibold text-yellow-800">
+          Borrador
+        </span>
+      @endif
+    </div>
+  </div>
+
+  {{-- CONTENIDO (HTML) --}}
   <div class="md:col-span-2">
     <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
       Contenido (HTML)

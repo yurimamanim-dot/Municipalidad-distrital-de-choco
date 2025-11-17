@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('categoria')->nullable(); // Eventos, Obras, Salud, etc.
             $table->timestamp('publicado_en')->nullable();
             $table->boolean('es_destacada')->default(false);
+            $table->boolean('publicado')->default(false); // 👈 NUEVO
             $table->timestamps();
         });
     }

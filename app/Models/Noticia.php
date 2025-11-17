@@ -19,11 +19,13 @@ class Noticia extends Model
         'imagen_portada',
         'publicado_en',
         'es_destacada',
+        'publicado',        // 👈 NUEVO: se puede asignar en create/update
     ];
 
     protected $casts = [
         'publicado_en' => 'datetime',
         'es_destacada' => 'boolean',
+        'publicado'    => 'boolean',   // 👈 NUEVO: casteo a boolean
     ];
 
     /**

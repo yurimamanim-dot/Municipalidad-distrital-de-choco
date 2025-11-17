@@ -14,7 +14,8 @@ class NoticiaController extends Controller
         $categoria = $request->query('categoria');
 
         $query = Noticia::query()
-            ->whereNotNull('publicado_en')
+            ->where('publicado', true)          // 👈 solo noticias publicadas
+            ->whereNotNull('publicado_en')      // opcional: que tengan fecha
             ->orderByDesc('publicado_en');
 
         if ($categoria && $categoria !== 'Todos') {
@@ -34,10 +35,15 @@ class NoticiaController extends Controller
      */
     public function showPublica(string $slug)
     {
-        $noticia = Noticia::where('slug', $slug)->firstOrFail();
+        // Solo permite ver noticias publicadas
+        $noticia = Noticia::where('slug', $slug)
+            ->where('publicado', true)
+            ->whereNotNull('publicado_en')
+            ->firstOrFail();
 
         // 1) Base: noticias distintas a la actual y publicadas
         $relacionadasQuery = Noticia::where('id', '!=', $noticia->id)
+            ->where('publicado', true)
             ->whereNotNull('publicado_en');
 
         // 2) Si la noticia tiene categoría, priorizamos esa misma categoría
@@ -55,8 +61,8 @@ class NoticiaController extends Controller
             $faltan = 3 - $relacionadas->count();
 
             $extras = Noticia::where('id', '!=', $noticia->id)
+                ->where('publicado', true)
                 ->whereNotNull('publicado_en')
-                // Si tiene categoría, evitamos repetir esa misma en el relleno
                 ->when($noticia->categoria, function ($q) use ($noticia) {
                     $q->where('categoria', '!=', $noticia->categoria);
                 })
@@ -92,17 +98,20 @@ class NoticiaController extends Controller
     {
         $data = $this->validateData($request);
 
+        // Imagen
         if ($request->hasFile('imagen_portada')) {
             $data['imagen_portada'] = $request->file('imagen_portada')->store('noticias', 'public');
         }
 
+        // Booleanos
         $data['es_destacada'] = $request->boolean('es_destacada');
+        $data['publicado']    = $request->boolean('publicado'); // 👈 toma el valor del select
 
         Noticia::create($data);
 
         return redirect()
             ->route('admin.noticias.index')
-            ->with('success', 'Noticia creada correctamente.');
+            ->with('ok', 'Noticia creada correctamente.');
     }
 
     /**
@@ -131,12 +140,13 @@ class NoticiaController extends Controller
         }
 
         $data['es_destacada'] = $request->boolean('es_destacada');
+        $data['publicado']    = $request->boolean('publicado'); // 👈 idem en update
 
         $noticia->update($data);
 
         return redirect()
             ->route('admin.noticias.index')
-            ->with('success', 'Noticia actualizada correctamente.');
+            ->with('ok', 'Noticia actualizada correctamente.');
     }
 
     public function destroy(Noticia $noticia)
@@ -145,7 +155,7 @@ class NoticiaController extends Controller
 
         return redirect()
             ->route('admin.noticias.index')
-            ->with('success', 'Noticia eliminada correctamente.');
+            ->with('ok', 'Noticia eliminada correctamente.');
     }
 
     // ----------- VALIDACIÓN COMPARTIDA -----------
@@ -160,6 +170,7 @@ class NoticiaController extends Controller
             'imagen_portada' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'publicado_en'   => 'nullable|date',
             'es_destacada'   => 'nullable|boolean',
+            'publicado'      => 'nullable|boolean',
         ]);
     }
 }
