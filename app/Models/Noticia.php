@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Noticia extends Model
 {
-        use HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'titulo',
         'slug',
         'bajada',
         'contenido',
-        'imagen_portada',
         'categoria',
+        'imagen_portada',
         'publicado_en',
         'es_destacada',
     ];
@@ -26,19 +26,31 @@ class Noticia extends Model
         'es_destacada' => 'boolean',
     ];
 
-    protected static function booted()
+    /**
+     * Genera automáticamente el slug a partir del título si está vacío.
+     */
+    protected static function boot()
     {
-        static::creating(function (Noticia $noticia) {
+        parent::boot();
+
+        static::saving(function (Noticia $noticia) {
             if (empty($noticia->slug)) {
-                $noticia->slug = Str::slug($noticia->titulo) . '-' . uniqid();
+                $noticia->slug = Str::slug($noticia->titulo);
             }
         });
     }
 
-    public function getFechaPublicacionFormateadaAttribute()
+    /**
+     * Fecha de publicación formateada en español.
+     */
+    public function getFechaPublicacionFormateadaAttribute(): string
     {
-        $fecha = $this->publicado_en ?? $this->created_at;
+        if (!$this->publicado_en) {
+            return '';
+        }
 
-        return $fecha?->format('d \d\e F, Y'); // “15 de Octubre, 2023”
+        return $this->publicado_en
+            ->locale('es')
+            ->translatedFormat('d \\d\\e F, Y'); // Ej: 15 de mayo, 2025
     }
 }

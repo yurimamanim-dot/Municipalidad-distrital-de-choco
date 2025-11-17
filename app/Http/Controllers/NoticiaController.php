@@ -23,22 +23,49 @@ class NoticiaController extends Controller
 
         $noticias = $query->paginate(12)->withQueryString();
 
-        // Puedes usar estas categorías para los filtros del listado
+        // Filtros de categoría para el listado público
         $categorias = ['Todos', 'Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
 
         return view('noticias.index', compact('noticias', 'categorias', 'categoria'));
     }
 
+    /**
+     * Detalle público de noticia (por slug) + noticias relacionadas.
+     */
     public function showPublica(string $slug)
     {
         $noticia = Noticia::where('slug', $slug)->firstOrFail();
 
-        // Noticias relacionadas (3 últimas distintas a la actual)
-        $relacionadas = Noticia::where('id', '!=', $noticia->id)
-            ->whereNotNull('publicado_en')
+        // 1) Base: noticias distintas a la actual y publicadas
+        $relacionadasQuery = Noticia::where('id', '!=', $noticia->id)
+            ->whereNotNull('publicado_en');
+
+        // 2) Si la noticia tiene categoría, priorizamos esa misma categoría
+        if ($noticia->categoria) {
+            $relacionadasQuery->where('categoria', $noticia->categoria);
+        }
+
+        $relacionadas = $relacionadasQuery
             ->latest('publicado_en')
             ->take(3)
             ->get();
+
+        // 3) Si no alcanzamos 3 relacionadas, rellenamos con otras categorías
+        if ($relacionadas->count() < 3) {
+            $faltan = 3 - $relacionadas->count();
+
+            $extras = Noticia::where('id', '!=', $noticia->id)
+                ->whereNotNull('publicado_en')
+                // Si tiene categoría, evitamos repetir esa misma en el relleno
+                ->when($noticia->categoria, function ($q) use ($noticia) {
+                    $q->where('categoria', '!=', $noticia->categoria);
+                })
+                ->latest('publicado_en')
+                ->take($faltan)
+                ->get();
+
+            $relacionadas = $relacionadas->concat($extras);
+        }
 
         return view('noticias.show', compact('noticia', 'relacionadas'));
     }
@@ -79,18 +106,13 @@ class NoticiaController extends Controller
     }
 
     /**
-     * Mostrar noticia desde el panel admin (si llegas a usar Route::resource).
-     * Reutilizamos la misma vista pública de detalle.
+     * Si llegaras a usar Route::resource para admin.noticias.show,
+     * reutilizamos la misma vista pública (con relacionadas).
      */
     public function show(Noticia $noticia)
     {
-        $relacionadas = Noticia::where('id', '!=', $noticia->id)
-            ->whereNotNull('publicado_en')
-            ->latest('publicado_en')
-            ->take(3)
-            ->get();
-
-        return view('noticias.show', compact('noticia', 'relacionadas'));
+        // Simplemente usamos la lógica de showPublica con el slug
+        return $this->showPublica($noticia->slug);
     }
 
     public function edit(Noticia $noticia)
