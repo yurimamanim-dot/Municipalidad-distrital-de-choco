@@ -15,4 +15,22 @@
     </div>
   </div>
 </div>
+
+{{-- Mismo editor WYSIWYG que en create --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+<script>
+  ClassicEditor
+    .create( document.querySelector('textarea[name="contenido"]'), {
+      toolbar: [
+        'undo','redo','|',
+        'bold','italic','underline','|',
+        'alignment','bulletedList','numberedList','|',
+        'link','insertTable','|',
+        'codeBlock'
+      ]
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+</script>
 @endsection

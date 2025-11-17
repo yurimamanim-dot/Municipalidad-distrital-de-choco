@@ -56,14 +56,16 @@
     @enderror
   </div>
 
+  {{-- CONTENIDO (HTML) – textarea que CKEditor va a transformar --}}
   <div class="md:col-span-2">
-    <label class="block text-sm font-medium text-gray-700 mb-1">
-      Contenido
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+        Contenido (HTML)
     </label>
-    <textarea name="contenido" rows="8"
-              class="w-full rounded-lg border-gray-300 bg-white text-sm focus:border-primary focus:ring-primary">{{ old('contenido', $noticia->contenido ?? '') }}</textarea>
+    <textarea name="contenido" rows="12"
+              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-background-dark text-sm focus:border-primary focus:ring-primary"
+              placeholder="Aquí puedes escribir o pegar contenido formateado.">{{ old('contenido', $noticia->contenido ?? '') }}</textarea>
     @error('contenido')
-      <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
     @enderror
   </div>
 

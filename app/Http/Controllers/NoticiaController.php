@@ -23,7 +23,7 @@ class NoticiaController extends Controller
 
         $noticias = $query->paginate(12)->withQueryString();
 
-        // si todavía no usas filtros, puedes ignorar esto
+        // Puedes usar estas categorías para los filtros del listado
         $categorias = ['Todos', 'Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
 
         return view('noticias.index', compact('noticias', 'categorias', 'categoria'));
@@ -33,7 +33,14 @@ class NoticiaController extends Controller
     {
         $noticia = Noticia::where('slug', $slug)->firstOrFail();
 
-        return view('noticias.show', compact('noticia'));
+        // Noticias relacionadas (3 últimas distintas a la actual)
+        $relacionadas = Noticia::where('id', '!=', $noticia->id)
+            ->whereNotNull('publicado_en')
+            ->latest('publicado_en')
+            ->take(3)
+            ->get();
+
+        return view('noticias.show', compact('noticia', 'relacionadas'));
     }
 
     // ----------- ADMIN -----------
@@ -50,6 +57,7 @@ class NoticiaController extends Controller
     public function create()
     {
         $categorias = ['Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
+
         return view('admin.noticias.create', compact('categorias'));
     }
 
@@ -65,20 +73,30 @@ class NoticiaController extends Controller
 
         Noticia::create($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia creada correctamente.');
     }
 
+    /**
+     * Mostrar noticia desde el panel admin (si llegas a usar Route::resource).
+     * Reutilizamos la misma vista pública de detalle.
+     */
     public function show(Noticia $noticia)
     {
-        // si quieres, puedes usar la vista pública
-        return view('noticias.show', compact('noticia'));
-        // o crear una vista admin.noticias.show
+        $relacionadas = Noticia::where('id', '!=', $noticia->id)
+            ->whereNotNull('publicado_en')
+            ->latest('publicado_en')
+            ->take(3)
+            ->get();
+
+        return view('noticias.show', compact('noticia', 'relacionadas'));
     }
 
     public function edit(Noticia $noticia)
     {
         $categorias = ['Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
+
         return view('admin.noticias.edit', compact('noticia', 'categorias'));
     }
 
@@ -94,7 +112,8 @@ class NoticiaController extends Controller
 
         $noticia->update($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia actualizada correctamente.');
     }
 
@@ -102,9 +121,12 @@ class NoticiaController extends Controller
     {
         $noticia->delete();
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia eliminada correctamente.');
     }
+
+    // ----------- VALIDACIÓN COMPARTIDA -----------
 
     protected function validateData(Request $request): array
     {
