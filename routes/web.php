@@ -9,7 +9,7 @@ use App\Http\Controllers\NoticiaController;
 // Controladores de gestión (admin / autenticados)
 use App\Http\Controllers\TramiteAdminController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UsuarioController; // <- si aún no lo tienes, créalo
+use App\Http\Controllers\UsuarioController;
 
 /* ========================================================================
  |  SITIO PÚBLICO
@@ -23,17 +23,19 @@ Route::view('/', 'home')->name('home');
 Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
 
 // Noticias públicas (listado y detalle por slug)
-Route::get('/noticias',            [NoticiaController::class, 'indexPublica'])->name('noticias.index');
-Route::get('/noticias/{slug}',     [NoticiaController::class, 'showPublica'  ])->name('noticias.show');
+Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
+Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'  ])->name('noticias.show');
 
 // Mesa de Partes (público)
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
+
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])
     ->name('mesa.enviar');
 
 // Confirmación de envío (accesible solo si hay datos en sesión)
 Route::get('/mesa-de-partes/confirmacion', function () {
     abort_unless(session()->has('expediente'), 404);
+
     return view('mesa-confirmacion', [
         'expediente' => session('expediente'),
         'nombre'     => session('nombre'),
@@ -44,10 +46,10 @@ Route::get('/mesa-de-partes/confirmacion', function () {
 
 /* ========================================================================
  |  ÁREA AUTENTICADA (Usuarios logueados)
- |  - Incluye dashboard genérico de Breeze y perfil
+ |  - Dashboard de Breeze, perfil y panel admin
  * ===================================================================== */
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
 
     // Dashboard por defecto de Breeze (área usuario)
     Route::view('/dashboard', 'dashboard')->name('dashboard');
@@ -71,37 +73,29 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/configuracion', 'admin.config')->name('config');
 
         /* ------------------------  Trámites (Mesa de Partes)  ------------------------ */
-        Route::get  ('/tramites',                 [TramiteAdminController::class, 'index'      ])->name('tramites.index');
-        Route::patch('/tramites/{tramite}/estado',[TramiteAdminController::class, 'updateEstado'])->name('tramites.estado');
+        Route::get  ('/tramites',                  [TramiteAdminController::class, 'index'       ])->name('tramites.index');
+        Route::patch('/tramites/{tramite}/estado', [TramiteAdminController::class, 'updateEstado'])->name('tramites.estado');
 
         /* -----------------------------  Noticias (admin)  --------------------------- */
-        Route::get   ('/noticias',               [NoticiaController::class, 'index'  ])->name('noticias.index');
-        Route::get   ('/noticias/crear',         [NoticiaController::class, 'create' ])->name('noticias.create');
-        Route::post  ('/noticias',               [NoticiaController::class, 'store'  ])->name('noticias.store');
-        Route::get   ('/noticias/{noticia}/editar',[NoticiaController::class, 'edit' ])->name('noticias.edit');
-        Route::put   ('/noticias/{noticia}',     [NoticiaController::class, 'update' ])->name('noticias.update');
-        Route::delete('/noticias/{noticia}',     [NoticiaController::class, 'destroy'])->name('noticias.destroy');
+        Route::get   ('/noticias',                 [NoticiaController::class, 'index'  ])->name('noticias.index');
+        Route::get   ('/noticias/crear',           [NoticiaController::class, 'create' ])->name('noticias.create');
+        Route::post  ('/noticias',                 [NoticiaController::class, 'store'  ])->name('noticias.store');
+        Route::get   ('/noticias/{noticia}/editar',[NoticiaController::class, 'edit'   ])->name('noticias.edit');
+        Route::put   ('/noticias/{noticia}',       [NoticiaController::class, 'update' ])->name('noticias.update');
+        Route::delete('/noticias/{noticia}',       [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 
         /* -----------------------------  Usuarios (admin)  --------------------------- 
-           Opción A: rutas con prefijo de nombre admin.usuarios.*
-           Si tus vistas usan route('usuarios.index') sin "admin.", puedes
-           dejar la Opción B (más abajo, fuera de /admin). Elige UNA sola.
+           Rutas: admin.usuarios.index, admin.usuarios.create, admin.usuarios.store, etc.
         */
-        // Route::resource('usuarios', UsuarioController::class)
-        //     ->except(['show'])
-        //     ->names('usuarios'); // => admin.usuarios.index, admin.usuarios.create, etc.
+        Route::resource('usuarios', UsuarioController::class)
+            ->except(['show'])
+            ->names('usuarios');
     });
-
-    /* -----------------------------  Usuarios (Opción B)  --------------------------- 
-       Recurso de usuarios SIN prefijo "admin." en el nombre (usuarios.*). 
-       Útil si ya usas route('usuarios.index') en las vistas.
-       Si escogiste la Opción A arriba, comenta este bloque.
-    */
-    Route::resource('usuarios', UsuarioController::class)->except(['show']);
 });
 
 
 /* ========================================================================
  |  RUTAS DE AUTENTICACIÓN (Breeze)
  * ===================================================================== */
-require __DIR__ . '/auth.php';
+
+require __DIR__.'/auth.php';

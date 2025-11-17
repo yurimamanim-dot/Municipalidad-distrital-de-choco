@@ -1,17 +1,28 @@
-@extends('layouts.municipal')
+@extends('layouts.admin')
 
-@section('title','Crear noticia')
+@section('title', 'Crear noticia')
 
 @section('content')
-<div class="py-10">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white shadow-xl sm:rounded-lg p-6">
-      <h1 class="mb-6 text-2xl font-bold text-gray-800">Crear noticia</h1>
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900">Nueva noticia</h1>
+            <p class="text-sm text-gray-600 mt-1">
+                Registra una nueva noticia para el portal municipal.
+            </p>
+        </div>
 
-      <form action="{{ route('admin.noticias.store') }}" method="POST" enctype="multipart/form-data">
-        @include('admin.noticias._form')
-      </form>
+        <a href="{{ route('admin.noticias.index') }}"
+           class="inline-flex items-center gap-1 rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            Volver
+        </a>
     </div>
-  </div>
-</div>
+
+    <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <form action="{{ route('admin.noticias.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+
+            @include('admin.noticas._form') {{-- si tu partial se llama distinto, ajústalo --}}
+        </form>
+    </div>
 @endsection

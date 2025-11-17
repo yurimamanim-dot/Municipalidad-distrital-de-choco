@@ -1,66 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // LISTADO
     public function index()
     {
-        //
+        $usuarios = User::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('usuarios.index', compact('usuarios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // FORMULARIO CREAR
     public function create()
     {
-        //
+        return view('usuarios.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // GUARDAR NUEVO USUARIO (simple)
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'min:6', 'confirmed'],
+            // si luego agregas roles/estado, aquí
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
+        $data['password'] = bcrypt($data['password']);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
+        User::create($data);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
+        return redirect()
+            ->route('usuarios.index')
+            ->with('ok', 'Usuario creado correctamente.');
     }
 }
