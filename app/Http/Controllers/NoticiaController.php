@@ -23,17 +23,51 @@ class NoticiaController extends Controller
 
         $noticias = $query->paginate(12)->withQueryString();
 
-        // si todavía no usas filtros, puedes ignorar esto
+        // Filtros de categoría para el listado público
         $categorias = ['Todos', 'Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
 
         return view('noticias.index', compact('noticias', 'categorias', 'categoria'));
     }
 
+    /**
+     * Detalle público de noticia (por slug) + noticias relacionadas.
+     */
     public function showPublica(string $slug)
     {
         $noticia = Noticia::where('slug', $slug)->firstOrFail();
 
-        return view('noticias.show', compact('noticia'));
+        // 1) Base: noticias distintas a la actual y publicadas
+        $relacionadasQuery = Noticia::where('id', '!=', $noticia->id)
+            ->whereNotNull('publicado_en');
+
+        // 2) Si la noticia tiene categoría, priorizamos esa misma categoría
+        if ($noticia->categoria) {
+            $relacionadasQuery->where('categoria', $noticia->categoria);
+        }
+
+        $relacionadas = $relacionadasQuery
+            ->latest('publicado_en')
+            ->take(3)
+            ->get();
+
+        // 3) Si no alcanzamos 3 relacionadas, rellenamos con otras categorías
+        if ($relacionadas->count() < 3) {
+            $faltan = 3 - $relacionadas->count();
+
+            $extras = Noticia::where('id', '!=', $noticia->id)
+                ->whereNotNull('publicado_en')
+                // Si tiene categoría, evitamos repetir esa misma en el relleno
+                ->when($noticia->categoria, function ($q) use ($noticia) {
+                    $q->where('categoria', '!=', $noticia->categoria);
+                })
+                ->latest('publicado_en')
+                ->take($faltan)
+                ->get();
+
+            $relacionadas = $relacionadas->concat($extras);
+        }
+
+        return view('noticias.show', compact('noticia', 'relacionadas'));
     }
 
     // ----------- ADMIN -----------
@@ -50,6 +84,7 @@ class NoticiaController extends Controller
     public function create()
     {
         $categorias = ['Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
+
         return view('admin.noticias.create', compact('categorias'));
     }
 
@@ -65,20 +100,25 @@ class NoticiaController extends Controller
 
         Noticia::create($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia creada correctamente.');
     }
 
+    /**
+     * Si llegaras a usar Route::resource para admin.noticias.show,
+     * reutilizamos la misma vista pública (con relacionadas).
+     */
     public function show(Noticia $noticia)
     {
-        // si quieres, puedes usar la vista pública
-        return view('noticias.show', compact('noticia'));
-        // o crear una vista admin.noticias.show
+        // Simplemente usamos la lógica de showPublica con el slug
+        return $this->showPublica($noticia->slug);
     }
 
     public function edit(Noticia $noticia)
     {
         $categorias = ['Eventos', 'Obras', 'Seguridad', 'Salud', 'Educación'];
+
         return view('admin.noticias.edit', compact('noticia', 'categorias'));
     }
 
@@ -94,7 +134,8 @@ class NoticiaController extends Controller
 
         $noticia->update($data);
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia actualizada correctamente.');
     }
 
@@ -102,9 +143,12 @@ class NoticiaController extends Controller
     {
         $noticia->delete();
 
-        return redirect()->route('admin.noticias.index')
+        return redirect()
+            ->route('admin.noticias.index')
             ->with('success', 'Noticia eliminada correctamente.');
     }
+
+    // ----------- VALIDACIÓN COMPARTIDA -----------
 
     protected function validateData(Request $request): array
     {

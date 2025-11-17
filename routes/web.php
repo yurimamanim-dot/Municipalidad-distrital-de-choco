@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Controladores públicos
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MesaDePartesController;
 use App\Http\Controllers\NoticiaController;
 
@@ -16,15 +17,15 @@ use App\Http\Controllers\UsuarioController;
  |  - Página principal y secciones públicas sin autenticación
  * ===================================================================== */
 
-// Home (portada)
-Route::view('/', 'home')->name('home');
+// INICIO (home) usando controlador para mandar noticias destacadas
+Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 // Página informativa “La Municipalidad”
 Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
 
 // Noticias públicas (listado y detalle por slug)
 Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
-Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'  ])->name('noticias.show');
+Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica' ])->name('noticias.show');
 
 // Mesa de Partes (público)
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
@@ -77,12 +78,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/tramites/{tramite}/estado', [TramiteAdminController::class, 'updateEstado'])->name('tramites.estado');
 
         /* -----------------------------  Noticias (admin)  --------------------------- */
-        Route::get   ('/noticias',                 [NoticiaController::class, 'index'  ])->name('noticias.index');
-        Route::get   ('/noticias/crear',           [NoticiaController::class, 'create' ])->name('noticias.create');
-        Route::post  ('/noticias',                 [NoticiaController::class, 'store'  ])->name('noticias.store');
-        Route::get   ('/noticias/{noticia}/editar',[NoticiaController::class, 'edit'   ])->name('noticias.edit');
-        Route::put   ('/noticias/{noticia}',       [NoticiaController::class, 'update' ])->name('noticias.update');
-        Route::delete('/noticias/{noticia}',       [NoticiaController::class, 'destroy'])->name('noticias.destroy');
+        // CRUD completo de noticias en /admin/noticias (sin show)
+        Route::resource('noticias', NoticiaController::class)->except(['show']);
 
         /* -----------------------------  Usuarios (admin)  --------------------------- 
            Rutas: admin.usuarios.index, admin.usuarios.create, admin.usuarios.store, etc.

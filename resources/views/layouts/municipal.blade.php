@@ -86,8 +86,8 @@
       </div>
 
       <nav class="hidden items-center gap-6 lg:flex">
-        <a href="{{ route('home') }}" class="text-sm font-medium
-               {{ request()->routeIs('home') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
+        <a href="{{ route('inicio') }}" class="text-sm font-medium
+               {{ request()->routeIs('inicio') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
           Inicio
         </a>
 

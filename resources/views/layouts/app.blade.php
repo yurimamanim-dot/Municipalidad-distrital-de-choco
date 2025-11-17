@@ -7,11 +7,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    {{-- Fuentes base de Breeze --}}
+    <!-- Fuente base de Breeze -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    {{-- Fuentes del portal + Material Symbols --}}
+    <!-- Fuentes del portal + Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -40,7 +40,7 @@
         }
     </style>
 
-    {{-- CSS + JS compilados --}}
+    <!-- CSS + JS compilados -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
