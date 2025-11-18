@@ -54,10 +54,10 @@
       </a>
 
       {{-- La Municipalidad --}}
-      <a href="{{ route('la-municipalidad') }}"
-         class="text-sm font-medium
-           {{ request()->routeIs('la-municipalidad') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
-        La Municipalidad
+      <a class="text-sm font-medium text-gray-600 hover:text-secondary" href="{{ route('la-municipalidad') }}">
+  La Municipalidad
+</a>
+
       </a>
 
       <a class="text-sm font-medium text-gray-600 hover:text-secondary" href="#">Servicios</a>

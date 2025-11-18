@@ -22,6 +22,17 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 // Página informativa “La Municipalidad”
 Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
+// Página "La Municipalidad" (pública)
+Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
+
+// Subpáginas de "La Municipalidad"
+Route::view('/la-municipalidad/mision', 'mision')->name('mision');
+Route::view('/la-municipalidad/vision', 'vision')->name('vision');
+Route::view('/la-municipalidad/historia', 'historia')->name('historia');
+Route::view('/la-municipalidad/organigrama', 'organigrama')->name('organigrama');
+Route::view('/la-municipalidad/valores', 'valores')->name('valores');
+Route::view('/la-municipalidad/equipo', 'equipo-gestion')->name('equipo-gestion');
+
 
 // Noticias públicas (listado y detalle por slug)
 Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
