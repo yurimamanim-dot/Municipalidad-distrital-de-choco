@@ -20,18 +20,20 @@ use App\Http\Controllers\UsuarioController;
 // INICIO (home) usando controlador para mandar noticias destacadas
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
-// Página informativa “La Municipalidad”
-Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
-// Página "La Municipalidad" (pública)
+// Página principal
+Route::get('/', [InicioController::class, 'index'])->name('inicio');
+
+// Página "Tu Municipalidad"
 Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
 
-// Subpáginas de "La Municipalidad"
+// Páginas internas de "Tu Municipalidad"
 Route::view('/la-municipalidad/mision', 'mision')->name('mision');
 Route::view('/la-municipalidad/vision', 'vision')->name('vision');
 Route::view('/la-municipalidad/historia', 'historia')->name('historia');
 Route::view('/la-municipalidad/organigrama', 'organigrama')->name('organigrama');
 Route::view('/la-municipalidad/valores', 'valores')->name('valores');
-Route::view('/la-municipalidad/equipo', 'equipo-gestion')->name('equipo-gestion');
+Route::view('/la-municipalidad/equipo-gestion', 'equipo-gestion')->name('equipo-gestion');
+
 
 
 // Noticias públicas (listado y detalle por slug)
