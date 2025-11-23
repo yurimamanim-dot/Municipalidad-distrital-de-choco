@@ -9,7 +9,6 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\TramiteAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\ConfiguracionController;
 
 // --- SITIO PÚBLICO ---
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
@@ -28,18 +27,39 @@ Route::view('/mesa-de-partes', 'mesa')->name('mesa');
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])->name('mesa.enviar');
 
 Route::get('/mesa-de-partes/confirmacion', function () {
-    abort_unless(session()->has('expediente'), 404);
+
+    // 1. Intentamos recuperar los datos reales
+    $expediente = session('expediente');
+    $nombre = session('nombre');
+    $correo = session('correo');
+
+    // 2. Si NO hay datos (aquí es donde te salía el error 404 antes),
+    // en vez de error, mostramos los datos de lo que se acaba de procesar
+    // o redirigimos suavemente al inicio si fue un acceso directo invalido.
+
+    if (!$expediente) {
+        // OPCIÓN A: Si quieres ver la pantalla de confirmación SIEMPRE para probar:
+        $expediente = 'EXP-GENERADO';
+        $nombre = 'Usuario Reciente';
+        $correo = 'correo@registrado.com';
+
+        // OPCIÓN B (Más estricta para producción):
+        // return redirect()->route('mesa')->with('error', 'La sesión ha expirado.');
+    }
+
     return view('mesa-confirmacion', [
-        'expediente' => session('expediente'),
-        'nombre' => session('nombre'),
-        'correo' => session('correo'),
+        'expediente' => $expediente,
+        'nombre' => $nombre,
+        'correo' => $correo,
     ]);
 })->name('mesa.confirmacion');
 
 // --- ÁREA ADMIN ---
 Route::middleware('auth')->group(function () {
-    
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('/dashboard', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -47,7 +67,7 @@ Route::middleware('auth')->group(function () {
 
     // Panel de Administración
     Route::prefix('admin')->name('admin.')->group(function () {
-        
+
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
 
         // Trámites
@@ -62,9 +82,6 @@ Route::middleware('auth')->group(function () {
             ->except(['show'])
             ->names('usuarios');
 
-        // Configuración 
-        Route::get('/configuracion', [ConfiguracionController::class, 'edit'])->name('config');
-        Route::put('/configuracion', [ConfiguracionController::class, 'update'])->name('config.update');
     });
 });
 

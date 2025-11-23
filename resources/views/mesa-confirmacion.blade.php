@@ -36,7 +36,7 @@
       </div>
 
       <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row">
-        <a href="{{ route('home') }}"
+        <a href="{{ route('inicio') }}"
            class="flex min-w-[220px] items-center justify-center rounded-lg h-12 px-6 bg-accent text-white text-sm font-bold uppercase tracking-wider hover:opacity-90 transition">
           Volver al Inicio
         </a>
