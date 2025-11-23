@@ -4,7 +4,7 @@
 
         <main class="w-full max-w-md">
             {{-- Logo + título --}}
-            <div class="mb-8 flex flex-col items-center text-center">
+            <div class="mb-6 flex flex-col items-center text-center">
                 <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full"
                      style="background-color:#1976D2;">
                     <span class="material-symbols-outlined text-5xl text-white">
@@ -20,7 +20,15 @@
                 </p>
             </div>
 
-            {{-- Mensaje de estado --}}
+            {{-- Mensaje de error de credenciales --}}
+            @if ($errors->any())
+                <div class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <p class="font-semibold">No se pudo iniciar sesión.</p>
+                    <p>Verifique su correo electrónico y contraseña e inténtelo nuevamente.</p>
+                </div>
+            @endif
+
+            {{-- Mensaje de estado (por ejemplo, después de resetear contraseña) --}}
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             {{-- Tarjeta de login --}}

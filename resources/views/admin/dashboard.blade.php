@@ -1,4 +1,3 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
 @extends('layouts.admin')
 
 @section('title', 'Dashboard')
@@ -15,7 +14,8 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {{-- Card Noticias --}}
+            
+            {{-- 1. NOTICIAS (Visible para todos) --}}
             <div class="flex flex-col justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <div>
                     <div class="flex items-center justify-between">
@@ -23,10 +23,7 @@
                         <span class="material-symbols-outlined text-2xl text-blue-900">newsmode</span>
                     </div>
                     <p class="mt-4 text-sm text-gray-600">
-                        Borradores: <span class="font-semibold">5</span>
-                    </p>
-                    <p class="text-sm text-gray-600">
-                        Publicados: <span class="font-semibold">87</span>
+                        Administrar publicaciones y comunicados.
                     </p>
                 </div>
 
@@ -37,46 +34,46 @@
                 </a>
             </div>
 
-            {{-- Card Usuarios --}}
+            {{-- 2. MESA DE PARTES (Nuevo - Visible para todos) --}}
             <div class="flex flex-col justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <div>
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900">Gestión de Usuarios</h3>
-                        <span class="material-symbols-outlined text-2xl text-blue-900">group</span>
+                        <h3 class="text-lg font-bold text-gray-900">Mesa de Partes</h3>
+                        <span class="material-symbols-outlined text-2xl text-blue-900">description</span>
                     </div>
                     <p class="mt-4 text-sm text-gray-600">
-                        Usuarios activos: <span class="font-semibold">1,250</span>
-                    </p>
-                    <p class="text-sm text-gray-600">
-                        Nuevos (mes): <span class="font-semibold">32</span>
+                        Revisar solicitudes y expedientes recibidos.
                     </p>
                 </div>
 
-                <a href="{{ route('admin.usuarios.index') }}"
+                <a href="{{ route('admin.tramites.index') }}"
                    class="mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-semibold text-white"
                    style="background-color:#003366;">
-                    Gestionar usuarios
+                    Ver trámites
                 </a>
             </div>
 
-            {{-- Card Configuración --}}
-            <div class="flex flex-col justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <div>
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900">Configuración</h3>
-                        <span class="material-symbols-outlined text-2xl text-blue-900">settings</span>
+            {{-- 3. USUARIOS (Protegido - Solo Admin) --}}
+            @if(auth()->user()->isAdmin())
+                <div class="flex flex-col justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-900">Gestión de Usuarios</h3>
+                            <span class="material-symbols-outlined text-2xl text-blue-900">group</span>
+                        </div>
+                        <p class="mt-4 text-sm text-gray-600">
+                            Administrar cuentas y permisos de acceso.
+                        </p>
                     </div>
-                    <p class="mt-4 text-sm text-gray-600">
-                        Ajustes generales del portal y parámetros del sistema.
-                    </p>
-                </div>
 
-                <a href="{{ route('admin.config') }}"
-                   class="mt-4 inline-flex h-10 items-center justify-center rounded-md
-                          bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-700">
-                    Ir a configuración
-                </a>
-            </div>
+                    <a href="{{ route('admin.usuarios.index') }}"
+                       class="mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-semibold text-white"
+                       style="background-color:#003366;">
+                        Gestionar usuarios
+                    </a>
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection

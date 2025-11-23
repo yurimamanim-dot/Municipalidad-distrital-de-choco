@@ -1,136 +1,98 @@
-<x-app-layout>
-    <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+@extends('layouts.admin')
 
-        {{-- Volver + título --}}
-        <div class="mb-6 flex items-center justify-between gap-3">
+@section('title', 'Crear Nuevo Usuario')
+
+@section('content')
+    <div class="max-w-4xl mx-auto">
+        {{-- Encabezado con botón de volver --}}
+        <div class="mb-6 flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">
-                    Crear nuevo usuario
+                <h1 class="text-3xl font-extrabold text-gray-900">
+                    Nuevo Usuario
                 </h1>
-                <p class="text-sm text-gray-600">
-                    Registra una nueva cuenta para el portal municipal.
-                </p>
+                <p class="mt-1 text-sm text-gray-600">Registra un nuevo miembro del equipo municipal.</p>
             </div>
-
-            <a href="{{ route('admin.usuarios.index') }}"
-               class="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                <span class="material-symbols-outlined text-sm">arrow_back</span>
-                <span>Volver al listado</span>
+            
+            <a href="{{ route('admin.usuarios.index') }}" 
+               class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+                ← Cancelar y volver
             </a>
         </div>
 
-        {{-- Errores de validación --}}
-        @if ($errors->any())
-            <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-                <p class="font-semibold">Revisa los siguientes campos:</p>
-                <ul class="mt-2 list-disc pl-5">
-                    @foreach ($errors->all() as $e)
-                        <li>{{ $e }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        {{-- Formulario --}}
+        {{-- Tarjeta del Formulario --}}
         <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-            <form action="{{ route('admin.usuarios.store') }}" method="POST" class="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2">
+            
+            {{-- Mostrar Errores de Validación (Feedback visual) --}}
+            @if ($errors->any())
+                <div class="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-800 border border-red-200">
+                    <div class="font-bold mb-1">Por favor corrige los siguientes errores:</div>
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('admin.usuarios.store') }}" method="POST" class="space-y-6">
                 @csrf
 
-                {{-- Nombre --}}
-                <div class="md:col-span-2">
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Nombre completo</span>
-                        <input
-                            type="text"
-                            name="name"
-                            value="{{ old('name') }}"
-                            placeholder="Ej: Juan Pérez"
-                            class="h-11 w-full rounded-lg border border-gray-300 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                    </label>
-                </div>
+                {{-- Sección 1: Datos Personales --}}
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    {{-- Nombre --}}
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="name" class="mb-2 block text-sm font-medium text-gray-900">Nombre Completo</label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" required placeholder="Ej: Juan Pérez"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-900 focus:ring-blue-900">
+                    </div>
 
-                {{-- Email --}}
-                <div class="md:col-span-2">
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Correo electrónico</span>
-                        <input
-                            type="email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            placeholder="Ej: juan.perez@email.com"
-                            class="h-11 w-full rounded-lg border border-gray-300 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                    </label>
-                </div>
+                    {{-- Correo --}}
+                    <div>
+                        <label for="email" class="mb-2 block text-sm font-medium text-gray-900">Correo Institucional</label>
+                        <input type="email" name="email" id="email" value="{{ old('email') }}" required placeholder="usuario@muni.gob.pe"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-900 focus:ring-blue-900">
+                    </div>
 
-                {{-- Contraseña --}}
-                <div>
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Contraseña</span>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="••••••••"
-                            class="h-11 w-full rounded-lg border border-gray-300 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                    </label>
-                </div>
-
-                {{-- Confirmar contraseña --}}
-                <div>
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Confirmar contraseña</span>
-                        <input
-                            type="password"
-                            name="password_confirmation"
-                            placeholder="••••••••"
-                            class="h-11 w-full rounded-lg border border-gray-300 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                    </label>
-                </div>
-
-                {{-- Estos selects son decorativos por ahora (no se guardan en BD) --}}
-                <div>
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Rol (opcional)</span>
-                        <select
-                            class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                            name="role">
-                            <option value="" selected>Seleccione un rol</option>
-                            <option value="admin">Administrador</option>
-                            <option value="editor">Editor</option>
-                            <option value="staff">Personal municipal</option>
+                    {{-- Rol (Selector Clave) --}}
+                    <div>
+                        <label for="role" class="mb-2 block text-sm font-medium text-gray-900">Rol y Permisos</label>
+                        <select name="role" id="role" required
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-900 focus:ring-blue-900">
+                            <option value="personal" {{ old('role') == 'personal' ? 'selected' : '' }}>Personal Municipal (Editor)</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador (Control Total)</option>
                         </select>
-                    </label>
+                        <p class="mt-1 text-xs text-gray-500">
+                            * Admin puede crear usuarios. Personal solo gestiona contenido.
+                        </p>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="flex flex-col">
-                        <span class="pb-2 text-sm font-medium text-gray-700">Estado (opcional)</span>
-                        <select
-                            class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                            name="status">
-                            <option value="active" selected>Activo</option>
-                            <option value="inactive">Inactivo</option>
-                        </select>
-                    </label>
+                <hr class="border-gray-100">
+
+                {{-- Sección 2: Seguridad --}}
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div>
+                        <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Contraseña</label>
+                        <input type="password" name="password" id="password" required
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-900 focus:ring-blue-900">
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="mb-2 block text-sm font-medium text-gray-900">Confirmar Contraseña</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" required
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-900 focus:ring-blue-900">
+                    </div>
                 </div>
 
-                {{-- Botones --}}
-                <div class="md:col-span-2 mt-4 flex items-center justify-end gap-3 border-t border-gray-200 pt-4">
-                    <a href="{{ route('admin.usuarios.index') }}"
-                       class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                        Cancelar
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
-                        Guardar usuario
+                {{-- Botón Guardar --}}
+                <div class="flex items-center justify-end pt-4">
+                    <button type="submit" 
+                            class="inline-flex items-center gap-2 rounded-lg px-6 py-2.5 text-center text-sm font-medium text-white shadow-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                            style="background-color: #003366;">
+                        <span class="material-symbols-outlined text-xl">save</span>
+                        Guardar Usuario
                     </button>
                 </div>
             </form>
         </div>
     </div>
-</x-app-layout>
+@endsection

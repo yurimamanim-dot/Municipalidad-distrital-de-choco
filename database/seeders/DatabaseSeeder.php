@@ -3,23 +3,22 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Crear el ADMINISTRADOR PRINCIPAL
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Yuri',
+            'email' => 'aqpyuri20081@gmail.com', // O el correo que tú quieras usar
+            'password' => Hash::make('Montescoli3'), // Contraseña inicial (cámbiala luego)
+            'role' => 'admin',  // <--- AQUÍ ESTÁ LA CLAVE
         ]);
+
+        // Opcional: Crear usuarios de prueba adicionales si quieres
+        // User::factory(5)->create(); 
     }
 }
