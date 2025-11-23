@@ -21,17 +21,28 @@
 
     {{-- Navegación --}}
     <nav class="p-3 space-y-1">
+        {{-- 1. Dashboard --}}
         <a href="{{ route('admin.dashboard') }}"
             class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span>
             <span>Dashboard</span>
         </a>
 
+        {{-- 2. Noticias --}}
         <a href="{{ route('admin.noticias.index') }}"
             class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.noticias.*') }}">
             <span class="material-symbols-outlined">newsmode</span>
             <span>Noticias</span>
         </a>
+
+        {{-- 3. Mesa de Partes (Visible para todos) --}}
+        <a href="{{ route('admin.tramites.index') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.tramites.*') }}">
+            <span class="material-symbols-outlined">description</span>
+            <span>Mesa de Partes</span>
+        </a>
+
+        {{-- 4. Usuarios (SOLO ADMIN) --}}
         @if(auth()->user()->isAdmin())
             <a href="{{ route('admin.usuarios.index') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.usuarios.*') }}">
@@ -40,6 +51,7 @@
             </a>
         @endif
 
+        {{-- 5. Configuración --}}
         <a href="{{ route('admin.config') }}"
             class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.config') }}">
             <span class="material-symbols-outlined">settings</span>

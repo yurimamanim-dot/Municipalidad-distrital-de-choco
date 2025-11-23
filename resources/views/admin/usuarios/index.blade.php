@@ -21,26 +21,6 @@
         </a>
     </div>
 
-    {{-- Barra de búsqueda (visual por ahora) --}}
-    <div class="mb-6">
-        <div class="rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
-            <div class="relative">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                    search
-                </span>
-                <input
-                    type="text"
-                    class="h-11 w-full rounded-lg border border-transparent bg-gray-50 pl-10 pr-3 text-sm
-                           text-gray-700 outline-none hover:bg-white focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary"
-                    placeholder="Buscar por nombre o correo..."
-                >
-            </div>
-            <p class="mt-2 text-xs text-gray-500">
-                (Búsqueda solo visual por ahora; luego podemos hacerla real con filtros.)
-            </p>
-        </div>
-    </div>
-
     {{-- Tabla de usuarios --}}
     <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
         <table class="min-w-full text-left text-sm">
@@ -48,6 +28,7 @@
                 <tr>
                     <th class="px-4 py-3">Nombre</th>
                     <th class="px-4 py-3">Correo</th>
+                    <th class="px-4 py-3">Rol</th> {{-- NUEVA COLUMNA --}}
                     <th class="px-4 py-3">Fecha de registro</th>
                     <th class="px-4 py-3 text-right">Acciones</th>
                 </tr>
@@ -55,11 +36,23 @@
             <tbody class="divide-y divide-gray-100">
                 @forelse ($usuarios as $usuario)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 text-gray-900">
+                        <td class="px-4 py-3 text-gray-900 font-medium">
                             {{ $usuario->name }}
                         </td>
                         <td class="px-4 py-3 text-gray-700">
                             {{ $usuario->email }}
+                        </td>
+                        <td class="px-4 py-3">
+                            {{-- ETIQUETAS DE ROL --}}
+                            @if($usuario->role === 'admin')
+                                <span class="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                                    Administrador
+                                </span>
+                            @else
+                                <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                    Personal
+                                </span>
+                            @endif
                         </td>
                         <td class="px-4 py-3 text-gray-700">
                             {{ optional($usuario->created_at)->format('d/m/Y') }}
@@ -71,27 +64,35 @@
                                 Editar
                             </a>
 
-                            <form action="{{ route('admin.usuarios.destroy', $usuario) }}"
-                                  method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        onclick="return confirm('¿Eliminar este usuario?')"
-                                        class="inline-flex items-center rounded-lg border border-red-200 px-3 py-1.5
-                                               text-xs font-semibold text-red-700 hover:bg-red-50">
-                                    Eliminar
-                                </button>
-                            </form>
+                            {{-- MEJORA: No mostrar botón eliminar si es el usuario actual --}}
+                            @if(auth()->id() !== $usuario->id)
+                                <form action="{{ route('admin.usuarios.destroy', $usuario) }}"
+                                      method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            onclick="return confirm('¿Eliminar este usuario?')"
+                                            class="inline-flex items-center rounded-lg border border-red-200 px-3 py-1.5
+                                                   text-xs font-semibold text-red-700 hover:bg-red-50">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-4 py-6 text-center text-sm text-gray-500">
+                        <td colspan="5" class="px-4 py-6 text-center text-sm text-gray-500">
                             No hay usuarios registrados.
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
+        
+        {{-- Paginación --}}
+        <div class="px-4 py-3 border-t border-gray-200">
+            {{ $usuarios->links() }} 
+        </div>
     </div>
 @endsection

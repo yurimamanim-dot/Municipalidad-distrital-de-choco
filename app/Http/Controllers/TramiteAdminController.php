@@ -2,37 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Tramite;
+use Illuminate\Http\Request;
 
 class TramiteAdminController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Listar los trámites recibidos
+     */
+    public function index()
     {
-        $tramites = Tramite::query()
-            ->when($request->filled('estado'), fn($q) => $q->where('estado',$request->estado))
-            ->when($request->filled('buscar'), function($q) use ($request){
-                $b = $request->buscar;
-                $q->where(function($x) use ($b){
-                    $x->where('expediente','like',"%$b%")
-                      ->orWhere('nombre','like',"%$b%")
-                      ->orWhere('asunto','like',"%$b%");
-                });
-            })
-            ->latest('fecha_recepcion')
-            ->paginate(15)
-            ->withQueryString();
+        // Traemos todos los trámites, ordenados por el más reciente
+        // No filtramos por rol porque Admin y Personal pueden verlos.
+        $tramites = Tramite::with('adjuntos') // Cargamos los adjuntos por si los necesitamos
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('admin.tramites.index', compact('tramites'));
     }
 
-    public function updateEstado(Tramite $tramite, Request $request)
+    /**
+     * Actualizar el estado del trámite (Ej: Pendiente -> Atendido)
+     */
+    public function updateEstado(Request $request, Tramite $tramite)
     {
-        $request->validate(['estado' => 'required|in:recibido,derivado,observado,atendido']);
+        $request->validate([
+            'estado' => 'required|in:pendiente,en_proceso,atendido,rechazado'
+        ]);
+
         $tramite->update(['estado' => $request->estado]);
-        return back()->with('ok','Estado actualizado.');
+
+        return back()->with('ok', 'El estado del expediente ' . $tramite->numero_expediente . ' ha sido actualizado.');
     }
 }
-
-
