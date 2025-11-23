@@ -11,6 +11,7 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\TramiteAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ConfiguracionController;
 
 /* ========================================================================
  |  SITIO PÚBLICO
@@ -32,8 +33,8 @@ Route::view('/la-municipalidad/valores', 'valores')->name('valores');
 Route::view('/la-municipalidad/equipo-gestion', 'equipo-gestion')->name('equipo-gestion');
 
 // Noticias públicas
-Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
-Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica' ])->name('noticias.show');
+Route::get('/noticias', [NoticiaController::class, 'indexPublica'])->name('noticias.index');
+Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'])->name('noticias.show');
 
 // Mesa de Partes (público)
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
@@ -44,8 +45,8 @@ Route::get('/mesa-de-partes/confirmacion', function () {
     abort_unless(session()->has('expediente'), 404);
     return view('mesa-confirmacion', [
         'expediente' => session('expediente'),
-        'nombre'     => session('nombre'),
-        'correo'     => session('correo'),
+        'nombre' => session('nombre'),
+        'correo' => session('correo'),
     ]);
 })->name('mesa.confirmacion');
 
@@ -88,6 +89,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('usuarios', UsuarioController::class)
             ->except(['show'])
             ->names('usuarios');
+
+        Route::get('/configuracion', [ConfiguracionController::class, 'edit'])->name('config');
+        Route::put('/configuracion', [ConfiguracionController::class, 'update'])->name('config.update');
     });
 });
 
