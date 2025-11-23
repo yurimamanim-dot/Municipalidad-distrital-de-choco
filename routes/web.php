@@ -10,64 +10,69 @@ use App\Http\Controllers\TramiteAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuarioController;
 
-// --- SITIO PÚBLICO ---
-Route::get('/', [InicioController::class, 'index'])->name('inicio');
-Route::view('/la-municipalidad', 'la-municipalidad')->name('la-municipalidad');
-Route::view('/la-municipalidad/mision', 'mision')->name('mision');
-Route::view('/la-municipalidad/vision', 'vision')->name('vision');
-Route::view('/la-municipalidad/historia', 'historia')->name('historia');
-Route::view('/la-municipalidad/organigrama', 'organigrama')->name('organigrama');
-Route::view('/la-municipalidad/valores', 'valores')->name('valores');
-Route::view('/la-municipalidad/equipo-gestion', 'equipo-gestion')->name('equipo-gestion');
+/* ========================================================================
+ |  SITIO PÚBLICO
+ * ===================================================================== */
 
-Route::get('/noticias', [NoticiaController::class, 'indexPublica'])->name('noticias.index');
+// Inicio
+Route::get('/', [InicioController::class, 'index'])->name('inicio');
+
+// --- SECCIÓN "TU MUNICIPALIDAD" (Carpeta nueva) ---
+Route::view('/la-municipalidad',                'municipalidad.index')->name('la-municipalidad');
+Route::view('/la-municipalidad/mision',         'municipalidad.mision')->name('mision');
+Route::view('/la-municipalidad/vision',         'municipalidad.vision')->name('vision');
+Route::view('/la-municipalidad/historia',       'municipalidad.historia')->name('historia');
+Route::view('/la-municipalidad/organigrama',    'municipalidad.organigrama')->name('organigrama');
+Route::view('/la-municipalidad/valores',        'municipalidad.valores')->name('valores');
+Route::view('/la-municipalidad/equipo-gestion', 'municipalidad.equipo-gestion')->name('equipo-gestion');
+
+// Noticias
+Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
 Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'])->name('noticias.show');
 
+// Mesa de Partes
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])->name('mesa.enviar');
 
+// Confirmación (Sin error 404)
 Route::get('/mesa-de-partes/confirmacion', function () {
-
-    // 1. Intentamos recuperar los datos reales
     $expediente = session('expediente');
-    $nombre = session('nombre');
-    $correo = session('correo');
-
-    // 2. Si NO hay datos (aquí es donde te salía el error 404 antes),
-    // en vez de error, mostramos los datos de lo que se acaba de procesar
-    // o redirigimos suavemente al inicio si fue un acceso directo invalido.
+    $nombre     = session('nombre');
+    $correo     = session('correo');
 
     if (!$expediente) {
-        // OPCIÓN A: Si quieres ver la pantalla de confirmación SIEMPRE para probar:
         $expediente = 'EXP-GENERADO';
-        $nombre = 'Usuario Reciente';
-        $correo = 'correo@registrado.com';
-
-        // OPCIÓN B (Más estricta para producción):
-        // return redirect()->route('mesa')->with('error', 'La sesión ha expirado.');
+        $nombre     = 'Usuario Reciente';
+        $correo     = 'correo@registrado.com';
     }
 
     return view('mesa-confirmacion', [
         'expediente' => $expediente,
-        'nombre' => $nombre,
-        'correo' => $correo,
+        'nombre'     => $nombre,
+        'correo'     => $correo,
     ]);
 })->name('mesa.confirmacion');
 
-// --- ÁREA ADMIN ---
+
+/* ========================================================================
+ |  ÁREA ADMIN (Protegida)
+ * ===================================================================== */
+
 Route::middleware('auth')->group(function () {
 
+    // Redirección del dashboard por defecto de Breeze al de Admin
     Route::get('/dashboard', function () {
         return redirect()->route('admin.dashboard');
     })->name('dashboard');
 
+    // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Panel de Administración
     Route::prefix('admin')->name('admin.')->group(function () {
-
+        
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
 
         // Trámites
@@ -77,11 +82,10 @@ Route::middleware('auth')->group(function () {
         // Noticias
         Route::resource('noticias', NoticiaController::class)->except(['show']);
 
-        // Usuarios
+        // Usuarios (Seguridad en el controlador)
         Route::resource('usuarios', UsuarioController::class)
             ->except(['show'])
             ->names('usuarios');
-
     });
 });
 
