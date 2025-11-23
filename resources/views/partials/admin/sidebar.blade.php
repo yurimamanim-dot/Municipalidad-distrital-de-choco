@@ -37,7 +37,7 @@
 
         {{-- 3. Mesa de Partes (Visible para todos) --}}
         <a href="{{ route('admin.tramites.index') }}"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.tramites.*') }}">
+            class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.tramites.*') }}">
             <span class="material-symbols-outlined">description</span>
             <span>Mesa de Partes</span>
         </a>
@@ -51,12 +51,6 @@
             </a>
         @endif
 
-        {{-- 5. Configuración --}}
-        <a href="{{ route('admin.config') }}"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.config') }}">
-            <span class="material-symbols-outlined">settings</span>
-            <span>Configuración</span>
-        </a>
     </nav>
 
     {{-- Zona inferior: sesión / logout --}}

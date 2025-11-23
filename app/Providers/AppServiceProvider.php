@@ -21,12 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Esto comparte la variable $config con TODAS las vistas (header, footer, etc.)
-        // Usamos un 'closure' (*) para que no de error si la tabla aun no existe al migrar
-        try {
-            View::share('config', Configuration::first() ?? new Configuration());
-        } catch (\Exception $e) {
-            // Ignorar si la base de datos no está lista aún
-        }
+        // Paginator::useBootstrap(); // Si tenías algo de paginación
     }
 }
