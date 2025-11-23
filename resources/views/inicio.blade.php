@@ -149,37 +149,66 @@
     </div>
   </section>
 
-  {{-- SERVICIOS MUNICIPALES --}}
+  {{-- SERVICIOS MUNICIPALES + REDES SOCIALES --}}
   <section class="py-16">
     <div class="mx-auto max-w-7xl px-4 md:px-10">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-primary">Servicios Municipales</h2>
-        <p class="mt-2 text-gray-600">
-          Accede a nuestros servicios en línea de forma rápida y segura.
-        </p>
-      </div>
 
-      <div class="mt-12 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-        @php
-          $services = [
-            ['icon' => 'edit_document', 'title' => 'Mesa de Partes Virtual'],
-            ['icon' => 'credit_card', 'title' => 'Pagos en Línea'],
-            ['icon' => 'description', 'title' => 'Licencias'],
-            ['icon' => 'construction', 'title' => 'Obras'],
-            ['icon' => 'local_police', 'title' => 'Seguridad'],
-          ];
-        @endphp
+      <div class="grid gap-12 lg:grid-cols-12 items-start">
 
-        @foreach($services as $s)
-          <a href="#"
-             class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 p-6 text-center transition-all hover:border-secondary hover:shadow-xl {{ $loop->last ? 'col-span-2 md:col-span-1' : '' }}">
-            <div
-              class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
-              <span class="material-symbols-outlined text-3xl">{{ $s['icon'] }}</span>
-            </div>
-            <h3 class="font-bold text-primary">{{ $s['title'] }}</h3>
-          </a>
-        @endforeach
+        {{-- SERVICIOS (ocupa más ancho) --}}
+        <div class="lg:col-span-7">
+          <div class="text-center lg:text-left">
+            <h2 class="text-3xl font-bold text-primary">Servicios Municipales</h2>
+            <p class="mt-2 text-gray-600">
+              Accede a nuestros servicios en línea de forma rápida y segura.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+            @php
+              $services = [
+                ['icon' => 'edit_document', 'title' => 'Mesa de Partes Virtual'],
+                ['icon' => 'credit_card',   'title' => 'Pagos en Línea'],
+                ['icon' => 'description',   'title' => 'Licencias'],
+                ['icon' => 'construction',  'title' => 'Obras'],
+                ['icon' => 'local_police',  'title' => 'Seguridad'],
+              ];
+            @endphp
+
+            @foreach($services as $s)
+              <a href="#"
+                 class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
+                <div
+                  class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
+                  <span class="material-symbols-outlined text-3xl">{{ $s['icon'] }}</span>
+                </div>
+                <h3 class="font-bold text-primary">{{ $s['title'] }}</h3>
+              </a>
+            @endforeach
+          </div>
+        </div>
+
+        {{-- REDES SOCIALES (más ancho a la derecha) --}}
+        <aside class="lg:col-span-5">
+          <div class="text-center lg:text-left">
+            <h2 class="text-3xl font-bold text-primary">Redes Sociales</h2>
+            <p class="mt-2 text-gray-600">
+              Síguenos en Facebook para conocer nuestras últimas actividades y comunicados oficiales.
+            </p>
+          </div>
+
+          <div class="mt-8 overflow-hidden rounded-xl bg-white shadow-lg">
+            <iframe
+              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChoco.municipalidad&tabs=timeline&width=500&height=560&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+              style="border:none; overflow:hidden; width:100%; height:560px;"
+              scrolling="no"
+              frameborder="0"
+              allowfullscreen="true"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+            </iframe>
+          </div>
+        </aside>
+
       </div>
     </div>
   </section>

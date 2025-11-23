@@ -1,4 +1,4 @@
-php@extends('layouts.municipal')
+@extends('layouts.municipal')
 
 @section('title','Municipalidad - La Municipalidad')
 
