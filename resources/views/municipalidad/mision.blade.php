@@ -1,77 +1,96 @@
 @extends('layouts.municipal')
 
-@section('title', 'Nuestra Visión de Futuro - Municipalidad')
+@section('title', 'Nuestra Misión - Municipalidad')
 
 @section('content')
-<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-white">
-    
-    {{-- Migas de Pan (Agregado para consistencia con el resto del sitio) --}}
-    <div class="w-full bg-gray-50 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div class="flex flex-wrap gap-2 text-sm">
-                <a class="text-gray-500 font-medium hover:text-secondary transition-colors" href="{{ route('inicio') }}">INICIO</a>
-                <span class="text-gray-400 font-medium">/</span>
-                <a class="text-gray-500 font-medium hover:text-secondary transition-colors" href="{{ route('la-municipalidad') }}">TU MUNICIPALIDAD</a>
-                <span class="text-gray-400 font-medium">/</span>
-                <span class="text-primary font-bold">VISIÓN</span>
+<div class="bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-10">
+
+        {{-- Migas de Pan --}}
+        <nav class="flex flex-wrap items-center gap-2 text-sm mb-2">
+            <a href="{{ route('inicio') }}"
+               class="font-medium text-gray-500 hover:text-secondary transition-colors">
+                INICIO
+            </a>
+            <span class="text-gray-400">/</span>
+            <a href="{{ route('la-municipalidad') }}"
+               class="font-medium text-gray-500 hover:text-secondary transition-colors">
+                TU MUNICIPALIDAD
+            </a>
+            <span class="text-gray-400">/</span>
+            <span class="font-bold text-primary">
+                MISIÓN
+            </span>
+        </nav>
+
+        {{-- Encabezado + Imagen --}}
+        <section class="grid gap-8 md:grid-cols-2 md:items-center">
+            <div class="space-y-4">
+                <h1 class="text-primary text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                    Nuestra Misión
+                </h1>
+                <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
+                    Contribuir al bienestar de los vecinos a través de una gestión transparente,
+                    eficiente y sostenible.
+                </p>
             </div>
-        </div>
+
+            <div class="w-full">
+                <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-md">
+                    <div class="w-full h-full bg-center bg-cover"
+                         data-alt="Un trabajador municipal ayudando a un ciudadano en una oficina luminosa y moderna."
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxxYskaJMQ9Y5yMVE8mzxdTPnHHxlKDCiqjVdFUrtTxXw54H9BRdrkwXAs9huXgGyd2z1PMIH3zr2twG4OGvf89EWbIKJffvdSx5Oo8EiWCDX-11ynMuDDjH-OucseJ3HL3l6xZFZfQnCAjMXOPAmqnHuLy2SEw6a2ekwS-tY5fVUAoak39nNgfZkBVvB3uAJa_r1j48knyXZ5npnYiJU_7WN_j1dHjbKhtuffncPW04_2-14GrM3WQdEI5RP56UGOm6isTrDOYlxs");'>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Tarjetas de valores relacionados a la misión --}}
+        <section>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                {{-- Card 1 --}}
+                <article class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-secondary !text-5xl">
+                        manage_search
+                    </span>
+                    <div class="space-y-1">
+                        <h2 class="text-primary text-lg font-bold">Transparencia</h2>
+                        <p class="text-gray-500 text-sm">
+                            Gestión clara y accesible para todos los vecinos.
+                        </p>
+                    </div>
+                </article>
+
+                {{-- Card 2 --}}
+                <article class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-secondary !text-5xl">
+                        groups
+                    </span>
+                    <div class="space-y-1">
+                        <h2 class="text-primary text-lg font-bold">Compromiso</h2>
+                        <p class="text-gray-500 text-sm">
+                            Dedicados al servicio y bienestar de nuestra comunidad.
+                        </p>
+                    </div>
+                </article>
+
+                {{-- Card 3 --}}
+                <article class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-secondary !text-5xl">
+                        potted_plant
+                    </span>
+                    <div class="space-y-1">
+                        <h2 class="text-primary text-lg font-bold">Desarrollo Local</h2>
+                        <p class="text-gray-500 text-sm">
+                            Impulsando el crecimiento sostenible y la calidad de vida.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
     </div>
-
-    <main class="flex-grow">
-        <!-- HeroSection -->
-        <section class="relative bg-white overflow-hidden">
-            <div class="absolute inset-0">
-                <img class="h-full w-full object-cover opacity-10" 
-                     alt="Imagen de un proyecto emblemático del distrito con arquitectura moderna y áreas verdes." 
-                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoW74tsJkYKmeSK2zK27CXgvuR4RyVeuVuVq4c7x0P5vWcxiT0TVnZL7YE4cdplZpDX1xVeqUeA2Q8ohFsVER2NHj5RW5DtvZLP2W9wqlY15IRFkF73W9BoLyNngHS8HlcuN5z_1Tob6ICLR3sfRgXprTxVtdznNjxcrk_J1dT5OwWb6wqlOSDua0xo4aLmg6l9doNTrNu7s48yot5SzVZNl13tXMHTGc0naiZQ-RzeapzTM5yXtuH7ksEVGOPDQYmdkB2kK63hGoW"/>
-            </div>
-            
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-                <div class="max-w-3xl mx-auto text-center">
-                    <h1 class="text-4xl font-black tracking-tight text-primary sm:text-6xl">
-                        Nuestra Visión de Futuro
-                    </h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600">
-                        Ser una municipalidad moderna, inclusiva y sostenible que promueva el desarrollo integral de todos los vecinos.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 sm:pb-32">
-            <div class="max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 text-center">
-                    
-                    <!-- Innovación -->
-                    <div class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white hover:shadow-lg transition-shadow">
-                        <h3 class="text-secondary text-lg font-bold leading-normal">Innovación</h3>
-                        <p class="text-sm text-gray-600">Impulsando la tecnología para servicios más eficientes.</p>
-                    </div>
-
-                    <!-- Sostenibilidad -->
-                    <div class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white hover:shadow-lg transition-shadow">
-                        <h3 class="text-secondary text-lg font-bold leading-normal">Sostenibilidad</h3>
-                        <p class="text-sm text-gray-600">Comprometidos con un futuro verde y equilibrado.</p>
-                    </div>
-
-                    <!-- Cercanía -->
-                    <div class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white hover:shadow-lg transition-shadow">
-                        <h3 class="text-primary text-lg font-bold leading-normal">Cercanía Ciudadana</h3>
-                        <p class="text-sm text-gray-600">Una gestión de puertas abiertas para todos los vecinos.</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="mt-16 text-center">
-                <button class="group relative inline-flex items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-secondary text-white text-base font-bold transition-all duration-300 ease-in-out hover:bg-green-700 shadow-md hover:shadow-xl">
-                    <span class="absolute inset-0 w-0 bg-primary transition-all duration-300 ease-out group-hover:w-full"></span>
-                    <span class="relative group-hover:text-white">Conoce nuestros proyectos</span>
-                </button>
-            </div>
-        </section>
-    </main>
 </div>
 @endsection
