@@ -3,17 +3,19 @@
 @section('title', 'Gestión de Noticias')
 
 @section('content')
-    <div class="flex items-center justify-between mb-6">
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-3xl font-extrabold text-gray-900">Gestión de Noticias</h1>
-            <p class="text-sm text-gray-600 mt-1">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">
+                Gestión de noticias
+            </h1>
+            <p class="mt-1 text-sm text-gray-600">
                 Listado de noticias publicadas en el portal municipal.
             </p>
         </div>
 
         <a href="{{ route('admin.noticias.create') }}"
-           class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white
-                  hover:bg-emerald-700">
+           class="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2
+                  text-sm font-semibold text-white hover:bg-emerald-700">
             <span class="material-symbols-outlined text-base">add</span>
             Nueva noticia
         </a>
@@ -25,62 +27,142 @@
         </div>
     @endif
 
-    <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
-        <table class="min-w-full text-left text-sm">
-            <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-500">
-                <tr>
-                    <th class="px-4 py-3">Título</th>
-                    <th class="px-4 py-3">Estado</th>
-                    <th class="px-4 py-3">Fecha</th>
-                    <th class="px-4 py-3 text-right">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-                @forelse ($noticias as $noticia)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3">
-                            <p class="font-medium text-gray-900">{{ $noticia->titulo }}</p>
-                            <p class="text-xs text-gray-500">Slug: {{ $noticia->slug }}</p>
-                        </td>
-                        <td class="px-4 py-3">
+    {{-- VISTA MÓVIL (cards) --}}
+    <div class="space-y-3 md:hidden">
+        @forelse ($noticias as $noticia)
+            <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div class="flex flex-col gap-2">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-900">
+                            {{ $noticia->titulo }}
+                        </p>
+                        <p class="text-[11px] text-gray-500">
+                            Slug: {{ $noticia->slug }}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        {{-- Estado --}}
+                        <div>
                             @if($noticia->publicado)
-                                <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
+                                <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5
+                                             text-[11px] font-semibold text-emerald-700">
                                     Publicado
                                 </span>
                             @else
-                                <span class="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-semibold text-yellow-800">
+                                <span class="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5
+                                             text-[11px] font-semibold text-yellow-800">
                                     Borrador
                                 </span>
                             @endif
-                        </td>
-                        <td class="px-4 py-3 text-sm text-gray-700">
-                            {{ $noticia->created_at?->format('d/m/Y') }}
-                        </td>
-                        <td class="px-4 py-3 text-right space-x-2">
-                            <a href="{{ route('admin.noticias.edit', $noticia) }}"
-                               class="inline-flex rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-100">
-                                Editar
-                            </a>
+                        </div>
 
-                            <form action="{{ route('admin.noticias.destroy', $noticia) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        onclick="return confirm('¿Eliminar esta noticia?')"
-                                        class="inline-flex rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">
-                                    Eliminar
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="px-4 py-6 text-center text-sm text-gray-500">
-                            No hay noticias registradas.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                        {{-- Fecha --}}
+                        <p class="text-[11px] text-gray-500">
+                            {{ $noticia->created_at?->format('d/m/Y') }}
+                        </p>
+                    </div>
+
+                    {{-- Acciones --}}
+                    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:justify-end">
+                        <a href="{{ route('admin.noticias.edit', $noticia) }}"
+                           class="inline-flex w-full items-center justify-center rounded-lg border border-gray-200
+                                  px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-100">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('admin.noticias.destroy', $noticia) }}"
+                              method="POST" class="inline w-full">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    onclick="return confirm('¿Eliminar esta noticia?')"
+                                    class="inline-flex w-full items-center justify-center rounded-lg border border-red-200
+                                           px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="rounded-xl border border-dashed border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
+                No hay noticias registradas.
+            </div>
+        @endforelse
     </div>
+
+    {{-- VISTA ESCRITORIO (tabla) --}}
+    <div class="mt-4 hidden md:block">
+        <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
+            <table class="min-w-full text-left text-sm">
+                <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-500">
+                    <tr>
+                        <th class="px-4 py-3">Título</th>
+                        <th class="px-4 py-3">Estado</th>
+                        <th class="px-4 py-3">Fecha</th>
+                        <th class="px-4 py-3 text-right">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse ($noticias as $noticia)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3">
+                                <p class="font-medium text-gray-900">{{ $noticia->titulo }}</p>
+                                <p class="text-xs text-gray-500">Slug: {{ $noticia->slug }}</p>
+                            </td>
+                            <td class="px-4 py-3">
+                                @if($noticia->publicado)
+                                    <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5
+                                                 text-xs font-semibold text-emerald-700">
+                                        Publicado
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5
+                                                 text-xs font-semibold text-yellow-800">
+                                        Borrador
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-700">
+                                {{ $noticia->created_at?->format('d/m/Y') }}
+                            </td>
+                            <td class="px-4 py-3 text-right space-x-2">
+                                <a href="{{ route('admin.noticias.edit', $noticia) }}"
+                                   class="inline-flex rounded-lg border border-gray-200 px-3 py-1.5
+                                          text-xs font-semibold text-gray-700 hover:bg-gray-100">
+                                    Editar
+                                </a>
+
+                                <form action="{{ route('admin.noticias.destroy', $noticia) }}"
+                                      method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            onclick="return confirm('¿Eliminar esta noticia?')"
+                                            class="inline-flex rounded-lg border border-red-200 px-3 py-1.5
+                                                   text-xs font-semibold text-red-700 hover:bg-red-50">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-6 text-center text-sm text-gray-500">
+                                No hay noticias registradas.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Paginación (para ambas vistas) --}}
+    @if(method_exists($noticias, 'links'))
+        <div class="mt-4">
+            {{ $noticias->links() }}
+        </div>
+    @endif
 @endsection

@@ -1,8 +1,10 @@
-<aside x-data="{ open: true }"
-    class="w-64 bg-white border-r fixed inset-y-0 left-0 z-40 transform transition-transform md:translate-x-0"
-    :class="open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
+<aside
+    class="w-64 bg-white border-r fixed inset-y-0 left-0 z-40 transform transition-transform duration-200
+           md:translate-x-0"
+    :class="open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    x-cloak
+>
     @php
-        // Helper para marcar el enlace activo
         $navActive = function (string $pattern) {
             return request()->routeIs($pattern)
                 ? 'bg-primary text-white'
@@ -21,38 +23,34 @@
 
     {{-- Navegación --}}
     <nav class="p-3 space-y-1">
-        {{-- Dashboard --}}
         <a href="{{ route('admin.dashboard') }}"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.dashboard') }}">
+           class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span>
             <span>Dashboard</span>
         </a>
 
-        {{-- Noticias --}}
         <a href="{{ route('admin.noticias.index') }}"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.noticias.*') }}">
+           class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.noticias.*') }}">
             <span class="material-symbols-outlined">newsmode</span>
             <span>Noticias</span>
         </a>
 
-        {{-- Mesa de Partes (FALTABA ESTO) --}}
         <a href="{{ route('admin.tramites.index') }}"
            class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.tramites.*') }}">
             <span class="material-symbols-outlined">description</span>
             <span>Mesa de Partes</span>
         </a>
 
-        {{-- Usuarios (SOLO ADMIN) --}}
         @if(auth()->user()->isAdmin())
             <a href="{{ route('admin.usuarios.index') }}"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.usuarios.*') }}">
+               class="flex items-center gap-3 px-3 py-2 rounded-lg {{ $navActive('admin.usuarios.*') }}">
                 <span class="material-symbols-outlined">group</span>
                 <span>Usuarios</span>
             </a>
         @endif
     </nav>
 
-    {{-- Zona inferior: sesión / logout --}}
+    {{-- Zona inferior --}}
     <div class="mt-auto p-3 border-t">
         <div class="px-3 py-2 rounded-lg bg-gray-50">
             <p class="text-xs text-gray-500">Sesión</p>

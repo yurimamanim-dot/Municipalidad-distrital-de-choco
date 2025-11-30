@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-50 w-full bg-white shadow-md">
+<header x-data="{ open: false }" class="sticky top-0 z-50 w-full bg-white shadow-md">
   {{-- Barra superior (Contacto y Redes) --}}
   <div class="bg-primary text-white">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-1 text-xs md:px-10">
@@ -33,12 +33,14 @@
     <div class="flex items-center gap-3">
       <img alt="Logo Municipalidad" class="h-12 w-10"
            src="{{ asset('img/logo-choco.png') }}">
-      <h1 class="text-xl font-bold text-primary hidden sm:block">MUNICIPALIDAD DE CHOCO</h1>
+      <h1 class="text-xl font-bold text-primary hidden sm:block">
+        MUNICIPALIDAD DE CHOCO
+      </h1>
     </div>
 
-    {{-- Menú de Navegación --}}
+    {{-- Menú de Navegación (Desktop) --}}
     <nav class="hidden items-center gap-6 lg:flex">
-      {{-- Inicio (Corregido route('inicio')) --}}
+      {{-- Inicio --}}
       <a href="{{ route('inicio') }}"
          class="text-sm font-medium
            {{ request()->routeIs('inicio') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
@@ -52,7 +54,7 @@
         La Municipalidad
       </a>
 
-      {{-- Noticias (Nuevo) --}}
+      {{-- Noticias --}}
       <a href="{{ route('noticias.index') }}"
          class="text-sm font-medium
            {{ request()->routeIs('noticias.*') ? 'text-primary font-semibold' : 'text-gray-600 hover:text-secondary' }}">
@@ -73,7 +75,7 @@
       @endauth
     </nav>
 
-    {{-- Botones de Acción --}}
+    {{-- Botones de Acción + botón menú móvil --}}
     <div class="flex items-center gap-4">
       {{-- Botón Mesa de Partes --}}
       <a href="{{ route('mesa') }}"
@@ -81,10 +83,62 @@
         <span class="truncate">Mesa de Partes</span>
       </a>
 
-      {{-- Botón Menú Móvil (Solo visible en celulares) --}}
-      <button class="p-2 text-primary lg:hidden">
-        <span class="material-symbols-outlined text-3xl">menu</span>
+      {{-- Botón Menú Móvil --}}
+      <button
+        type="button"
+        class="p-2 text-primary lg:hidden"
+        @click="open = !open"
+      >
+        <span class="sr-only">Abrir menú</span>
+        <span class="material-symbols-outlined text-3xl" x-show="!open" x-cloak>menu</span>
+        <span class="material-symbols-outlined text-3xl" x-show="open" x-cloak>close</span>
       </button>
     </div>
   </div>
+
+  {{-- Menú móvil desplegable --}}
+  <nav
+    class="border-t border-gray-100 bg-white lg:hidden"
+    x-show="open"
+    x-transition.origin.top
+    x-cloak
+  >
+    <div class="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
+      <a href="{{ route('inicio') }}"
+         class="block rounded-md px-3 py-2 text-sm font-medium
+           {{ request()->routeIs('inicio') ? 'bg-gray-100 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        Inicio
+      </a>
+
+      <a href="{{ route('la-municipalidad') }}"
+         class="block rounded-md px-3 py-2 text-sm font-medium
+           {{ request()->routeIs('la-municipalidad') ? 'bg-gray-100 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        La Municipalidad
+      </a>
+
+      <a href="{{ route('noticias.index') }}"
+         class="block rounded-md px-3 py-2 text-sm font-medium
+           {{ request()->routeIs('noticias.*') ? 'bg-gray-100 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-50' }}">
+        Noticias
+      </a>
+
+      @auth
+        <a href="{{ route('dashboard') }}"
+           class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+          Portal Admin
+        </a>
+      @else
+        <a href="{{ route('login') }}"
+           class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+          Portal
+        </a>
+      @endauth
+
+      <a href="{{ route('mesa') }}"
+         class="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-sm font-semibold text-white hover:bg-green-700">
+        <span class="material-symbols-outlined text-base">draft</span>
+        Mesa de Partes
+      </a>
+    </div>
+  </nav>
 </header>
