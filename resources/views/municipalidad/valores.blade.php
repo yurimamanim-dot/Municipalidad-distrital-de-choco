@@ -3,7 +3,7 @@
 @section('title', 'Nuestros Valores - Municipalidad')
 
 @section('content')
-<div class="bg-white">
+<div class="bg-gray-50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-10">
 
         {{-- Migas de pan --}}
@@ -28,7 +28,7 @@
             <h1 class="text-primary text-3xl sm:text-4xl font-black leading-tight tracking-tight">
                 Nuestros Valores
             </h1>
-            <p class="text-gray-600 text-sm sm:text-base">
+            <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
                 Los principios que guían nuestro compromiso con la comunidad.
             </p>
         </section>
@@ -39,9 +39,9 @@
 
                 {{-- Responsabilidad --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">shield_with_heart</span>
                     </div>
                     <div class="space-y-1">
@@ -54,9 +54,9 @@
 
                 {{-- Transparencia --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">balance</span>
                     </div>
                     <div class="space-y-1">
@@ -69,9 +69,9 @@
 
                 {{-- Inclusión --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">groups</span>
                     </div>
                     <div class="space-y-1">
@@ -84,9 +84,9 @@
 
                 {{-- Respeto --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">handshake</span>
                     </div>
                     <div class="space-y-1">
@@ -99,9 +99,9 @@
 
                 {{-- Innovación --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">lightbulb</span>
                     </div>
                     <div class="space-y-1">
@@ -114,9 +114,9 @@
 
                 {{-- Solidaridad --}}
                 <article
-                    class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           hover:shadow-md hover:-translate-y-1 hover:border-secondary transition-all duration-200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary">
+                    class="group flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
+                           hover:shadow-lg hover:-translate-y-1 hover:border-secondary transition-all duration-200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-50 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined">volunteer_activism</span>
                     </div>
                     <div class="space-y-1">
