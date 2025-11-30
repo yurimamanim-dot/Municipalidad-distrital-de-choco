@@ -30,6 +30,13 @@ Route::view('/la-municipalidad/equipo-gestion', 'municipalidad.equipo-gestion')-
 Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name('noticias.index');
 Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'])->name('noticias.show');
 
+// Página de Programas
+// Página de Programas
+
+
+Route::view('/programas-sociales', 'programas-sociales')->name('programas.sociales');
+
+
 // Mesa de Partes
 Route::view('/mesa-de-partes', 'mesa')->name('mesa');
 Route::post('/mesa-de-partes/enviar', [MesaDePartesController::class, 'store'])->name('mesa.enviar');
@@ -72,7 +79,7 @@ Route::middleware('auth')->group(function () {
 
     // Panel de Administración
     Route::prefix('admin')->name('admin.')->group(function () {
-        
+
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
 
         // Trámites
@@ -82,7 +89,7 @@ Route::middleware('auth')->group(function () {
         // Noticias
         Route::resource('noticias', NoticiaController::class)->except(['show']);
 
-        // Usuarios (Seguridad en el controlador)
+        // Usuarios
         Route::resource('usuarios', UsuarioController::class)
             ->except(['show'])
             ->names('usuarios');

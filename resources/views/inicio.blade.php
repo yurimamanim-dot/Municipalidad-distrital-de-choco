@@ -32,7 +32,6 @@
       </div>
 
       <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-
         @php
           // Imágenes de respaldo para cuando la noticia no tenga portada
           $fallbackImages = [
@@ -85,6 +84,7 @@
           @endforeach
         @else
           {{-- Si no hay noticias destacadas, mostramos tus 3 tarjetas originales --}}
+
           {{-- Card 1 --}}
           <div class="flex flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:-translate-y-2">
             <div class="h-56 w-full bg-cover bg-center"
@@ -155,7 +155,7 @@
 
       <div class="grid gap-12 lg:grid-cols-12 items-start">
 
-        {{-- SERVICIOS (ocupa más ancho) --}}
+        {{-- SERVICIOS (columna izquierda) --}}
         <div class="lg:col-span-7">
           <div class="text-center lg:text-left">
             <h2 class="text-3xl font-bold text-primary">Servicios Municipales</h2>
@@ -165,30 +165,64 @@
           </div>
 
           <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-            @php
-              $services = [
-                ['icon' => 'edit_document', 'title' => 'Mesa de Partes Virtual'],
-                ['icon' => 'credit_card',   'title' => 'Pagos en Línea'],
-                ['icon' => 'description',   'title' => 'Licencias'],
-                ['icon' => 'construction',  'title' => 'Obras'],
-                ['icon' => 'local_police',  'title' => 'Seguridad'],
-              ];
-            @endphp
 
-            @foreach($services as $s)
-              <a href="#"
-                 class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
-                <div
-                  class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
-                  <span class="material-symbols-outlined text-3xl">{{ $s['icon'] }}</span>
-                </div>
-                <h3 class="font-bold text-primary">{{ $s['title'] }}</h3>
-              </a>
-            @endforeach
+            {{-- PROGRAMAS (ruta correcta) --}}
+            <a href="{{ route('programas.sociales') }}"
+               class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
+                <span class="material-symbols-outlined text-3xl">edit_document</span>
+              </div>
+              <h3 class="font-bold text-primary">Programas</h3>       
+              <p class="text-sm text-gray-600">
+                Apoyo a familias, adultos mayores y población en situación de vulnerabilidad.
+              </p>
+
+            </a>
+
+            {{-- SALUD Y CAMPAÑAS --}}
+            <a href="#"
+               class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
+                <span class="material-symbols-outlined text-3xl">vaccines</span>
+              </div>
+              <h3 class="font-bold text-primary">Salud y campañas</h3>
+              <p class="text-sm text-gray-600">
+                Jornadas médicas, vacunación y acciones de prevención para el distrito.
+              </p>
+            </a>
+
+            {{-- EDUCACIÓN Y CULTURA --}}
+            <a href="#"
+               class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
+                <span class="material-symbols-outlined text-3xl">menu_book</span>
+              </div>
+              <h3 class="font-bold text-primary">Educación y cultura</h3>
+              <p class="text-sm text-gray-600">
+                Talleres, actividades culturales y apoyo a estudiantes del distrito.
+              </p>
+            </a>
+
+            {{-- LICENCIAS Y TRÁMITES --}}
+            <a href="#"
+               class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
+                <span class="material-symbols-outlined text-3xl">description</span>
+              </div>
+              <h3 class="font-bold text-primary">Licencias y trámites</h3>
+              <p class="text-sm text-gray-600">
+                Información y atención para licencias, permisos y otros trámites.
+              </p>
+            </a>
+
           </div>
         </div>
 
-        {{-- REDES SOCIALES (más ancho a la derecha) --}}
+        {{-- REDES SOCIALES (columna derecha) --}}
         <aside class="lg:col-span-5">
           <div class="text-center lg:text-left">
             <h2 class="text-3xl font-bold text-primary">Redes Sociales</h2>

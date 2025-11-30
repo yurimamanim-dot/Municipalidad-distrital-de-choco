@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Yuri',
             'email' => 'aqpyuri20081@gmail.com', // O el correo que tú quieras usar
             'password' => Hash::make('Montescoli3'), // Contraseña inicial (cámbiala luego)
-            'role' => 'admin',  // <--- AQUÍ ESTÁ LA CLAVE
+            'role' => 'admin',  
         ]);
 
         // Opcional: Crear usuarios de prueba adicionales si quieres
