@@ -1,4 +1,4 @@
-@extends('layouts.municipal')
+@extends('layouts.municipal') 
 
 @section('title', 'Nuestra Misión - Municipalidad')
 
@@ -52,7 +52,8 @@
                 {{-- Card 1 --}}
                 <article
                     class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                           shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-secondary
+                           transition-all duration-200">
                     <div class="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/10 text-secondary">
                         <span class="material-symbols-outlined !text-4xl">
                             manage_search
@@ -69,7 +70,8 @@
                 {{-- Card 2 --}}
                 <article
                     class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                           shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-secondary
+                           transition-all duration-200">
                     <div class="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/10 text-secondary">
                         <span class="material-symbols-outlined !text-4xl">
                             groups
@@ -86,7 +88,8 @@
                 {{-- Card 3 --}}
                 <article
                     class="flex flex-col items-center text-center gap-3 rounded-xl border border-gray-200 bg-white p-5 sm:p-6
-                           shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                           shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-secondary
+                           transition-all duration-200">
                     <div class="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/10 text-secondary">
                         <span class="material-symbols-outlined !text-4xl">
                             potted_plant

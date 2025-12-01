@@ -50,46 +50,58 @@
             </div>
         </section>
 
-        {{-- Bloques de visión --}}
+        {{-- Bloques de visión en tarjetas (estilo imagen) --}}
         <section class="bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-                <div class="max-w-4xl mx-auto grid grid-cols-1 gap-6 sm:grid-cols-3 text-center">
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     {{-- Innovación --}}
                     <article
-                        class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white shadow-sm
-                               hover:shadow-md hover:-translate-y-1 hover:border-secondary
-                               transition-all duration-200">
-                        <h3 class="text-secondary text-lg font-bold leading-normal">
+                        class="flex flex-col items-center text-center gap-3 rounded-2xl border border-gray-200 bg-white px-6 py-8
+                               hover:border-secondary hover:shadow-md transition-all duration-200">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-50">
+                            <span class="material-symbols-outlined text-3xl text-secondary">
+                                lightbulb
+                            </span>
+                        </div>
+                        <h3 class="text-primary text-lg font-extrabold">
                             Innovación
                         </h3>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 max-w-xs">
                             Impulsando la tecnología para servicios más eficientes.
                         </p>
                     </article>
 
                     {{-- Sostenibilidad --}}
                     <article
-                        class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white shadow-sm
-                               hover:shadow-md hover:-translate-y-1 hover:border-secondary
-                               transition-all duration-200">
-                        <h3 class="text-secondary text-lg font-bold leading-normal">
+                        class="flex flex-col items-center text-center gap-3 rounded-2xl border border-gray-200 bg-white px-6 py-8
+                               hover:border-secondary hover:shadow-md transition-all duration-200">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-50">
+                            <span class="material-symbols-outlined text-3xl text-secondary">
+                                eco
+                            </span>
+                        </div>
+                        <h3 class="text-primary text-lg font-extrabold">
                             Sostenibilidad
                         </h3>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 max-w-xs">
                             Comprometidos con un futuro verde y equilibrado.
                         </p>
                     </article>
 
                     {{-- Cercanía ciudadana --}}
                     <article
-                        class="flex flex-col gap-2 rounded-lg p-6 border border-gray-200 bg-white shadow-sm
-                               hover:shadow-md hover:-translate-y-1 hover:border-secondary
-                               transition-all duration-200">
-                        <h3 class="text-primary text-lg font-bold leading-normal">
+                        class="flex flex-col items-center text-center gap-3 rounded-2xl border border-gray-200 bg-white px-6 py-8
+                               hover:border-secondary hover:shadow-md transition-all duration-200">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-50">
+                            <span class="material-symbols-outlined text-3xl text-secondary">
+                                diversity_3
+                            </span>
+                        </div>
+                        <h3 class="text-primary text-lg font-extrabold">
                             Cercanía ciudadana
                         </h3>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 max-w-xs">
                             Una gestión de puertas abiertas para todos los vecinos.
                         </p>
                     </article>
