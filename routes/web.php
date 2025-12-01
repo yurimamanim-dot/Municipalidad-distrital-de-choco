@@ -31,10 +31,13 @@ Route::get('/noticias',        [NoticiaController::class, 'indexPublica'])->name
 Route::get('/noticias/{slug}', [NoticiaController::class, 'showPublica'])->name('noticias.show');
 
 // Página de Programas
-// Página de Programas
+Route::view('/servicios/programas-municipales', 'servicios.programas-municipales')->name('programas.sociales');
 
+// Salud y Campañas
+Route::view('/servicios/salud', 'servicios.salud')->name('salud.campanas');
 
-Route::view('/programas-sociales', 'programas-sociales')->name('programas.sociales');
+// Página de Educación y Cultura
+Route::view('/servicios/educacion', 'servicios.educacion')->name('servicios.educacion');
 
 
 // Mesa de Partes

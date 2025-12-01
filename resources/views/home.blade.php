@@ -20,6 +20,7 @@
     </div>
   </section>
 
+
   {{-- NOTICIAS DESTACADAS --}}
   <section class="bg-light-gray py-16">
     <div class="mx-auto max-w-7xl px-4 md:px-10">

@@ -29,14 +29,29 @@
   {{-- Barra principal (Navegación) --}}
   <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-10">
     
-    {{-- Logo y Nombre --}}
-    <div class="flex items-center gap-3">
-      <img alt="Logo Municipalidad" class="h-12 w-10"
-           src="{{ asset('img/logo-choco.png') }}">
-      <h1 class="text-xl font-bold text-primary hidden sm:block">
-        MUNICIPALIDAD DE CHOCO
-      </h1>
+
+
+
+
+<div class="flex items-center gap-3">
+    {{-- Logo Municipalidad --}}
+    <img
+        src="https://img.icons8.com/?size=100&id=9887&format=png"
+        alt="Logo Municipalidad Distrital de Choco"
+        class="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover bg-white border border-primary"
+    >
+
+    {{-- Nombre de la municipalidad --}}
+    <div class="flex flex-col leading-tight">
+        <span class="text-sm md:text-base font-semibold text-primary uppercase tracking-tight">
+            Municipalidad Distrital de
+        </span>
+        <span class="text-xl md:text-2xl font-extrabold text-primary tracking-tight uppercase">
+            Choco
+        </span>
     </div>
+</div>
+
 
     {{-- Menú de Navegación (Desktop) --}}
     <nav class="hidden items-center gap-6 lg:flex">

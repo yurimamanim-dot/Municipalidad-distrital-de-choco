@@ -181,7 +181,7 @@
             </a>
 
             {{-- SALUD Y CAMPAÑAS --}}
-            <a href="#"
+            <a href=" {{ route('salud.campanas') }}"
                class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
               <div
                 class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
@@ -194,7 +194,7 @@
             </a>
 
             {{-- EDUCACIÓN Y CULTURA --}}
-            <a href="#"
+            <a href="{{ route('servicios.educacion') }}"
                class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
               <div
                 class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
@@ -206,16 +206,16 @@
               </p>
             </a>
 
-            {{-- LICENCIAS Y TRÁMITES --}}
-            <a href="#"
+            {{-- NOTICIAS --}}
+            <a href="{{ route('noticias.index') }}"
                class="group flex flex-col items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 text-center transition-all hover:border-secondary hover:shadow-xl">
               <div
                 class="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors group-hover:bg-secondary group-hover:text-white">
                 <span class="material-symbols-outlined text-3xl">description</span>
               </div>
-              <h3 class="font-bold text-primary">Licencias y trámites</h3>
+              <h3 class="font-bold text-primary">Noticias</h3>
               <p class="text-sm text-gray-600">
-                Información y atención para licencias, permisos y otros trámites.
+                 Noticias oficiales sobre actividades y servicios para informar a vecinos..
               </p>
             </a>
 
@@ -257,18 +257,15 @@
             Estamos comprometidos con la transparencia y la participación ciudadana.
             Accede a la información pública, presenta tus reclamos o contáctanos.
           </p>
-          <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-            <a href="#"
-               class="flex w-full items-center justify-center rounded-lg h-12 px-6 bg-primary text-white font-bold transition-transform hover:scale-105 sm:w-auto">
-              <span class="material-symbols-outlined mr-2">visibility</span>
-              <span>Portal de Transparencia</span>
-            </a>
-            <a href="#"
-               class="flex w-full items-center justify-center rounded-lg h-12 px-6 bg-white text-primary border border-primary font-bold transition-transform hover:scale-105 sm:w-auto">
-              <span class="material-symbols-outlined mr-2">menu_book</span>
-              <span>Libro de Reclamaciones</span>
+
+          <div class="mt-8 flex flex-col items-center justify-center sm:flex-row lg:justify-start">
+            <a href="{{ route('mesa') }}"
+               class="flex w-full items-center justify-center rounded-lg h-12 px-8 bg-primary text-white font-bold transition-transform hover:scale-105 sm:w-auto">
+             <span class="material-symbols-outlined mr-2">edit_document</span>
+             <span>Mesa de Partes</span>
             </a>
           </div>
+
         </div>
 
         <div class="overflow-hidden rounded-lg shadow-lg">
